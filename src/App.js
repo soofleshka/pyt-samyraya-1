@@ -1,9 +1,14 @@
 import React from "react";
+import {Header} from "./components/Header/Header";
+import {Navbar} from "./components/Navbar/Navbar";
+import {MainContent} from "./components/MainContent/MainContent";
 
 function App() {
     return (
-        <div>
-            <h1>Hello React</h1>
+        <div className="container">
+            <Header/>
+            <Navbar/>
+            <MainContent/>
         </div>
     )
 }
