@@ -12,3 +12,7 @@
     text-decoration: none;
     color: #fff;
 }
+.nav a.active {
+    color: gold;
+    font-size: 40px;
+}

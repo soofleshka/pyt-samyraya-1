@@ -1,0 +1,17 @@
+.dialogs{
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    min-height: 100%;
+}
+
+.dialog_items{
+    border-right: 1px solid green;
+}
+
+.dialog_item.active{
+    color: gold;
+}
+
+.dialog_messages{
+
+}

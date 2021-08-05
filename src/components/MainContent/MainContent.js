@@ -1,12 +1,18 @@
 import React from "react";
-import styles from "./mainContent.module.css"
-import {Profile} from "./Profile/Profile";
+import styles from "./MainContent.module.css";
+import { Profile } from "./Profile/Profile";
+import { Dialogs } from "./Dialogs/Dialogs";
+import { News } from "./News/News";
+import { Music } from "./Music/Music";
+import { BrowserRouter, Route } from "react-router-dom";
 
-export const MainContent = ()=>{
-    return (
-        <main className={styles.main_content}>
-            <img src="https://images.pexels.com/photos/1542252/pexels-photo-1542252.jpeg?auto=compress&cs=tinysrgb&dpr=3&h=750&w=1260" alt=""/>
-            <Profile/>
-        </main>
-    )
-}
+export const MainContent = () => {
+  return (
+    <main className={styles.main_content}>
+      <Route path="/profile" component={Profile} />
+      <Route path="/dialogs" component={Dialogs} />
+      <Route path="/news" component={News} />
+      <Route path="/music" component={Music} />
+    </main>
+  );
+};
