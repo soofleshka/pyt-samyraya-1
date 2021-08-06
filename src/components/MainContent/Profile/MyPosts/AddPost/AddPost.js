@@ -1,11 +1,13 @@
 import React from "react";
 import styles from "./AddPost.module.css";
 
-export const AddPost = () => {
+export const AddPost = ({ addPost }) => {
+  console.log(addPost);
   let postTextAreaElement = React.createRef();
   let addPostHandler = () => {
+    debugger;
     let postText = postTextAreaElement.current.value;
-    alert(postText);
+    addPost(postText);
   };
 
   return (

@@ -3,11 +3,11 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import data from "./redux/state";
+import data, { methods } from "./redux/state";
 
 ReactDOM.render(
   <React.StrictMode>
-    <App data={data} />
+    <App data={data} methods={methods} />
   </React.StrictMode>,
   document.getElementById("root")
 );

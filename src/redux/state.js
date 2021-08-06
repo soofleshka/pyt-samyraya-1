@@ -38,4 +38,12 @@ let data = {
   navbarPage: { friends },
 };
 
+let addPost = (postText) => {
+  debugger;
+  let newPost = { id: data.mainContentPage.posts.length + 1, post: postText };
+  data.mainContentPage.posts.push(newPost);
+};
+
+export let methods = { mainContentPage: { addPost } };
+
 export default data;
