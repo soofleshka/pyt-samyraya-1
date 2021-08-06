@@ -1,0 +1,14 @@
+.sendMessage {
+    padding: 10px;
+}
+
+.sendMessage textarea{
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
+
+.sendMessage__button{
+    display: block;
+    margin-left: auto;
+}

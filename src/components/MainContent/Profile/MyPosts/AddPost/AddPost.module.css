@@ -1,0 +1,14 @@
+.addPost{
+    padding-right: 5px;
+}
+
+.addPost textarea{
+    width: 100%;
+    resize: none;
+    overflow: hidden;
+}
+
+.addPost__button{
+    display: block;
+    margin-left: auto;
+}

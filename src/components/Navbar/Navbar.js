@@ -5,7 +5,7 @@ import { NavbarFriends } from "./NavbarFriends/NavbarFriends";
 
 export const Navbar = ({ friends }) => {
   return (
-    <nav>
+    <nav className={styles.nav}>
       <ul>
         <li>
           <NavLink to="/profile" activeClassName={styles.active}>
@@ -28,7 +28,7 @@ export const Navbar = ({ friends }) => {
           </NavLink>
         </li>
       </ul>
-
+      <h3 className={styles.friends__title}>Friends</h3>
       <NavbarFriends friends={friends} />
     </nav>
   );

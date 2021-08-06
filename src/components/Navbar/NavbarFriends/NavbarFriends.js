@@ -6,7 +6,7 @@ export const NavbarFriends = ({ friends }) => {
   return (
     <div className={styles.NavbarFriends}>
       {friends.map((f) => (
-        <NavbarFriend friend={f} />
+        <NavbarFriend friend={f} key={f.id} />
       ))}
     </div>
   );

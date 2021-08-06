@@ -1,14 +1,14 @@
 import React from "react";
 import styles from "./MyPosts.module.css";
 import { Post } from "./Post/Post";
+import { AddPost } from "./AddPost/AddPost";
 
 export const MyPosts = ({ posts }) => {
   return (
     <div className={styles.myPosts}>
-      My posts:
-      {posts.reverse().map((p) => (
-        <Post message={p.post} />
-      ))}
+      <h3>My posts:</h3>
+      <AddPost />
+      {posts.map((p) => <Post message={p.post} key={p.id} />).reverse()}
     </div>
   );
 };
