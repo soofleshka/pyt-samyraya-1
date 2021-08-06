@@ -11,7 +11,13 @@ export const MainContent = ({ data, methods }) => {
     <main>
       <Route
         path="/profile"
-        render={() => <Profile posts={data.posts} methods={methods} />}
+        render={() => (
+          <Profile
+            posts={data.posts}
+            newPostText={data.newPostText}
+            methods={methods}
+          />
+        )}
       />
       <Route
         path="/dialogs"

@@ -3,7 +3,7 @@ import styles from "./Profile.module.css";
 import { MyPosts } from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
 
-export const Profile = ({ posts, methods }) => {
+export const Profile = ({ posts, newPostText, methods }) => {
   return (
     <div className={styles.profile}>
       <img
@@ -11,7 +11,7 @@ export const Profile = ({ posts, methods }) => {
         alt=""
       />
       <ProfileInfo />
-      <MyPosts posts={posts} methods={methods} />
+      <MyPosts posts={posts} newPostText={newPostText} methods={methods} />
     </div>
   );
 };

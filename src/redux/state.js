@@ -1,3 +1,5 @@
+import rerenderReact from "../rerender";
+
 let dialogs = [
   { id: 1, name: "Slava" },
   { id: 2, name: "Tanya" },
@@ -33,17 +35,24 @@ let friends = [
   { id: 5, name: "Roma" },
 ];
 
+let newPostText = { value: "" };
+
 let data = {
-  mainContentPage: { dialogs, messages, posts },
+  mainContentPage: { dialogs, messages, posts, newPostText },
   navbarPage: { friends },
 };
 
 let addPost = (postText) => {
-  debugger;
   let newPost = { id: data.mainContentPage.posts.length + 1, post: postText };
   data.mainContentPage.posts.push(newPost);
+  rerenderReact(data, methods);
 };
 
-export let methods = { mainContentPage: { addPost } };
+let changeNewPost = (newPostTextValue) => {
+  newPostText.value = newPostTextValue;
+  rerenderReact(data, methods);
+};
+
+export let methods = { mainContentPage: { addPost, changeNewPost } };
 
 export default data;
