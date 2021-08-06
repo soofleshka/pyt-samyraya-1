@@ -1,0 +1,19 @@
+.navbarFriend{
+    flex:0 1 33%;
+    margin-bottom: 5px;
+}
+
+.navbarFriend a{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.navbarFriend__image{
+    display: inline-block;
+    width: 50px;height: 50px;
+    border-radius: 50%;
+    background-color: yellow;
+    margin-right: 5px;
+    margin: auto;
+}

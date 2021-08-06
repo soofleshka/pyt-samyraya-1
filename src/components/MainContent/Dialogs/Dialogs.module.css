@@ -4,14 +4,13 @@
     min-height: 100%;
 }
 
-.dialog_items{
+.dialogItems{
     border-right: 1px solid green;
 }
 
-.dialog_item.active{
+.dialogItem.active{
     color: gold;
 }
 
-.dialog_messages{
-
+.dialogMessages{
 }

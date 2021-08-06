@@ -1,4 +1,9 @@
-.dialog_message{
-    padding: 10px;
-    border-bottom:  1px solid green;;
+.dialogMessage{
+    margin: 10px;
+    padding: 5px;
+    background-color: rgba(0,0,0,0.2);
+}
+
+.isYours{
+    text-align: end;
 }

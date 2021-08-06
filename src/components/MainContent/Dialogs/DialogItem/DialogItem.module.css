@@ -1,4 +1,14 @@
-.dialog_item{
+.dialogAva{
     padding: 5px;
     overflow: hidden;
+    display: flex;
+    align-items: center ;
+}
+
+.dialogAva__image{
+    display: inline-block;
+    width: 30px;height: 30px;
+    border-radius: 50%;
+    background-color: yellow;
+    margin-right: 5px;
 }

@@ -4,13 +4,18 @@ import { Profile } from "./Profile/Profile";
 import { Dialogs } from "./Dialogs/Dialogs";
 import { News } from "./News/News";
 import { Music } from "./Music/Music";
-import { BrowserRouter, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
-export const MainContent = () => {
+export const MainContent = ({ data }) => {
   return (
-    <main className={styles.main_content}>
-      <Route path="/profile" component={Profile} />
-      <Route path="/dialogs" component={Dialogs} />
+    <main>
+      <Route path="/profile" render={() => <Profile posts={data.posts} />} />
+      <Route
+        path="/dialogs"
+        render={() => (
+          <Dialogs dialogs={data.dialogs} messages={data.messages} />
+        )}
+      />
       <Route path="/news" component={News} />
       <Route path="/music" component={Music} />
     </main>

@@ -4,8 +4,11 @@ import { NavLink } from "react-router-dom";
 
 export const DialogItem = ({ id, name }) => {
   return (
-    <div className={styles.dialog_item}>
-      <NavLink to={"/dialogs/" + id}>{name}</NavLink>
-    </div>
+    <NavLink to={"/dialogs/" + id}>
+      <div className={styles.dialogAva}>
+        <div className={styles.dialogAva__image}></div>
+        {name}
+      </div>
+    </NavLink>
   );
 };

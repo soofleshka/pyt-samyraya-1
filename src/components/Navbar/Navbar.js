@@ -1,10 +1,11 @@
 import React from "react";
 import styles from "./Navbar.module.css";
 import { NavLink } from "react-router-dom";
+import { NavbarFriends } from "./NavbarFriends/NavbarFriends";
 
-export const Navbar = () => {
+export const Navbar = ({ friends }) => {
   return (
-    <nav className={styles.nav}>
+    <nav>
       <ul>
         <li>
           <NavLink to="/profile" activeClassName={styles.active}>
@@ -27,6 +28,8 @@ export const Navbar = () => {
           </NavLink>
         </li>
       </ul>
+
+      <NavbarFriends friends={friends} />
     </nav>
   );
 };

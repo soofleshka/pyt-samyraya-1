@@ -4,13 +4,13 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { MainContent } from "./components/MainContent/MainContent";
 import { BrowserRouter } from "react-router-dom";
 
-function App() {
+function App({ data }) {
   return (
     <BrowserRouter>
       <div className="container">
         <Header />
-        <Navbar />
-        <MainContent />
+        <Navbar friends={data.navbarPage.friends} />
+        <MainContent data={data.mainContentPage} />
       </div>
     </BrowserRouter>
   );
