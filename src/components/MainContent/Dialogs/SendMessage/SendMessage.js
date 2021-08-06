@@ -1,16 +1,22 @@
 import React from "react";
 import styles from "./SendMessage.module.css";
 
-export const SendMessage = () => {
-  let messageTextareaElementRef = React.createRef();
+export const SendMessage = ({
+  newMessageText,
+  sendMessage,
+  changeNewMessage,
+}) => {
   let sendMessageHandler = () => {
-    let messageText = messageTextareaElementRef.current.value;
-    alert(messageText);
+    sendMessage();
+  };
+
+  let changeNewMessageHandler = (e) => {
+    changeNewMessage(e.target.value);
   };
 
   return (
     <div className={styles.sendMessage}>
-      <textarea ref={messageTextareaElementRef}></textarea>
+      <textarea onChange={changeNewMessageHandler} value={newMessageText} />
       <button
         onClick={sendMessageHandler}
         className={styles.sendMessage__button}

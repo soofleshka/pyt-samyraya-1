@@ -35,24 +35,51 @@ let friends = [
   { id: 5, name: "Roma" },
 ];
 
-let newPostText = { value: "" };
+let newPostText = "";
+
+let newMessageText = "";
 
 let data = {
-  mainContentPage: { dialogs, messages, posts, newPostText },
+  mainContentPage: { dialogs, messages, newMessageText, posts, newPostText },
   navbarPage: { friends },
 };
 
-let addPost = (postText) => {
-  let newPost = { id: data.mainContentPage.posts.length + 1, post: postText };
+let addPost = () => {
+  let newPost = {
+    id: data.mainContentPage.posts.length + 1,
+    post: data.mainContentPage.newPostText,
+  };
   data.mainContentPage.posts.push(newPost);
+  data.mainContentPage.newPostText = "";
   rerenderReact(data, methods);
 };
 
 let changeNewPost = (newPostTextValue) => {
-  newPostText.value = newPostTextValue;
+  data.mainContentPage.newPostText = newPostTextValue;
   rerenderReact(data, methods);
 };
 
-export let methods = { mainContentPage: { addPost, changeNewPost } };
+let sendMessage = () => {
+  let newMessage = {
+    id: data.mainContentPage.messages.length + 1,
+    message: data.mainContentPage.newMessageText,
+    isYours: true,
+  };
+  data.mainContentPage.messages.push(newMessage);
+  data.mainContentPage.newMessageText = "";
+  rerenderReact(data, methods);
+};
+
+let changeNewMessage = (newMessageTextValue) => {
+  data.mainContentPage.newMessageText = newMessageTextValue;
+  rerenderReact(data, methods);
+};
+
+export let methods = {
+  mainContentPage: {
+    profileMethods: { addPost, changeNewPost },
+    dialogsMethods: { sendMessage, changeNewMessage },
+  },
+};
 
 export default data;

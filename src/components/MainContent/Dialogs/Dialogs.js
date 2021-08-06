@@ -4,7 +4,7 @@ import { DialogItem } from "./DialogItem/DialogItem";
 import { DialogMessage } from "./DialogMessage/DialogMessage";
 import { SendMessage } from "./SendMessage/SendMessage";
 
-export const Dialogs = ({ dialogs, messages }) => {
+export const Dialogs = ({ dialogs, messages, newMessageText, methods }) => {
   return (
     <div>
       <div className={styles.dialogs}>
@@ -20,7 +20,11 @@ export const Dialogs = ({ dialogs, messages }) => {
         </div>
       </div>
 
-      <SendMessage />
+      <SendMessage
+        newMessageText={newMessageText}
+        sendMessage={methods.sendMessage}
+        changeNewMessage={methods.changeNewMessage}
+      />
     </div>
   );
 };

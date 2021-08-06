@@ -15,14 +15,19 @@ export const MainContent = ({ data, methods }) => {
           <Profile
             posts={data.posts}
             newPostText={data.newPostText}
-            methods={methods}
+            methods={methods.profileMethods}
           />
         )}
       />
       <Route
         path="/dialogs"
         render={() => (
-          <Dialogs dialogs={data.dialogs} messages={data.messages} />
+          <Dialogs
+            dialogs={data.dialogs}
+            messages={data.messages}
+            newMessageText={data.newMessageText}
+            methods={methods.dialogsMethods}
+          />
         )}
       />
       <Route path="/news" component={News} />
