@@ -6,16 +6,16 @@ import { News } from "./News/News";
 import { Music } from "./Music/Music";
 import { Route } from "react-router-dom";
 
-export const MainContent = ({ data, methods }) => {
+export const MainContent = ({ state, dispatch }) => {
   return (
     <main>
       <Route
         path="/profile"
         render={() => (
           <Profile
-            posts={data.posts}
-            newPostText={data.newPostText}
-            methods={methods.profileMethods}
+            posts={state.posts}
+            newPostText={state.newPostText}
+            dispatch={dispatch}
           />
         )}
       />
@@ -23,10 +23,10 @@ export const MainContent = ({ data, methods }) => {
         path="/dialogs"
         render={() => (
           <Dialogs
-            dialogs={data.dialogs}
-            messages={data.messages}
-            newMessageText={data.newMessageText}
-            methods={methods.dialogsMethods}
+            dialogs={state.dialogs}
+            messages={state.messages}
+            newMessageText={state.newMessageText}
+            dispatch={dispatch}
           />
         )}
       />

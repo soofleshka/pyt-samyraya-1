@@ -1,8 +1,21 @@
+import React from "react";
+import ReactDOM from "react-dom";
+import "./index.css";
+import App from "./App";
 import reportWebVitals from "./reportWebVitals";
-import data, { methods } from "./redux/state";
-import rerenderReact from "./rerender";
+import store from "./redux/state";
 
-rerenderReact(data, methods);
+let rerenderReact = () => {
+  ReactDOM.render(
+    <React.StrictMode>
+      <App state={store.getState()} dispatch={store.dispatch.bind(store)} />
+    </React.StrictMode>,
+    document.getElementById("root")
+  );
+};
+
+store.subscribe(rerenderReact);
+rerenderReact(store.getState());
 // If you want to start measuring performance in your app, pass a function
 // to log results (for example: reportWebVitals(console.log))
 // or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals

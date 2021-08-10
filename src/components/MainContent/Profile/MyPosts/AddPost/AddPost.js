@@ -1,13 +1,19 @@
 import React from "react";
 import styles from "./AddPost.module.css";
+import {
+  ActionCreatorAddPost,
+  ActionCreatorChangeNewPost,
+} from "../../../../../redux/state";
 
-export const AddPost = ({ newPostText, addPost, changeNewPost }) => {
+export const AddPost = ({ newPostText, dispatch }) => {
   let addPostHandler = () => {
-    addPost();
+    let action = ActionCreatorAddPost();
+    dispatch(action);
   };
 
   let changeNewPostTextHandler = (e) => {
-    changeNewPost(e.target.value);
+    let action = ActionCreatorChangeNewPost(e.target.value);
+    dispatch(action);
   };
 
   return (
