@@ -1,18 +1,18 @@
 import React from "react";
 import styles from "./SendMessage.module.css";
 import {
-  ActionCreatorChangeNewMessage,
-  ActionCreatorSendMessage,
-} from "../../../../redux/state";
+  changeNewMessageActionCreator,
+  sendMessageActionCreator,
+} from "../../../../redux/dialogs-reducer";
 
 export const SendMessage = ({ newMessageText, dispatch }) => {
   let sendMessageHandler = () => {
-    let action = ActionCreatorSendMessage();
+    let action = sendMessageActionCreator();
     dispatch(action);
   };
 
   let changeNewMessageHandler = (e) => {
-    let action = ActionCreatorChangeNewMessage(e.target.value);
+    let action = changeNewMessageActionCreator(e.target.value);
     dispatch(action);
   };
 

@@ -4,7 +4,8 @@ import { DialogItem } from "./DialogItem/DialogItem";
 import { DialogMessage } from "./DialogMessage/DialogMessage";
 import { SendMessage } from "./SendMessage/SendMessage";
 
-export const Dialogs = ({ dialogs, messages, newMessageText, dispatch }) => {
+export const Dialogs = ({ state, dispatch }) => {
+  let { dialogs, messages, newMessageText } = state;
   return (
     <div>
       <div className={styles.dialogs}>

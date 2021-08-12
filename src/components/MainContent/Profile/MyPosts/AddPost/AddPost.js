@@ -1,18 +1,18 @@
 import React from "react";
 import styles from "./AddPost.module.css";
 import {
-  ActionCreatorAddPost,
-  ActionCreatorChangeNewPost,
-} from "../../../../../redux/state";
+  addPostActionCreator,
+  changeNewPostActionCreator,
+} from "../../../../../redux/profile-reducer";
 
 export const AddPost = ({ newPostText, dispatch }) => {
   let addPostHandler = () => {
-    let action = ActionCreatorAddPost();
+    let action = addPostActionCreator();
     dispatch(action);
   };
 
   let changeNewPostTextHandler = (e) => {
-    let action = ActionCreatorChangeNewPost(e.target.value);
+    let action = changeNewPostActionCreator(e.target.value);
     dispatch(action);
   };
 

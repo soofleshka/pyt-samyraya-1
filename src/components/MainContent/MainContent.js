@@ -11,24 +11,11 @@ export const MainContent = ({ state, dispatch }) => {
     <main>
       <Route
         path="/profile"
-        render={() => (
-          <Profile
-            posts={state.posts}
-            newPostText={state.newPostText}
-            dispatch={dispatch}
-          />
-        )}
+        render={() => <Profile state={state.profilePage} dispatch={dispatch} />}
       />
       <Route
         path="/dialogs"
-        render={() => (
-          <Dialogs
-            dialogs={state.dialogs}
-            messages={state.messages}
-            newMessageText={state.newMessageText}
-            dispatch={dispatch}
-          />
-        )}
+        render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch} />}
       />
       <Route path="/news" component={News} />
       <Route path="/music" component={Music} />
