@@ -28,18 +28,23 @@ const newsReducer = (state = initialState, action) => {
         title: state.newNews.title,
         body: state.newNews.body,
       };
-      state.news.push(newNews);
-      state.newNews.title = "";
-      state.newNews.body = "";
-      return state;
+      return {
+        ...state,
+        news: [...state.news, newNews],
+        newNews: { ...state.newNews, title: "", body: "" },
+      };
     }
     case CHANGE_NEW_NEWS_TITLE: {
-      state.newNews.title = action.newNewsTitleText;
-      return state;
+      return {
+        ...state,
+        newNews: { ...state.newNews, title: action.newNewsTitleText },
+      };
     }
     case CHANGE_NEW_NEWS_BODY: {
-      state.newNews.body = action.newNewsBodyText;
-      return state;
+      return {
+        ...state,
+        newNews: { ...state.newNews, body: action.newNewsBodyText },
+      };
     }
     default:
       return state;

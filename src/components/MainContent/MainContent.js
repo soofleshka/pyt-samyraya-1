@@ -6,15 +6,12 @@ import { NewsContainer } from "./News/NewsContainer";
 import { Music } from "./Music/Music";
 import styles from "./MainContent.module.css";
 
-export const MainContent = ({ store }) => {
+export const MainContent = () => {
   return (
     <main>
-      <Route path="/profile" render={() => <Profile store={store} />} />
-      <Route
-        path="/dialogs"
-        render={() => <DialogsContainer store={store} />}
-      />
-      <Route path="/news" render={() => <NewsContainer store={store} />} />
+      <Route path="/profile" render={() => <Profile />} />
+      <Route path="/dialogs" render={() => <DialogsContainer />} />
+      <Route path="/news" render={() => <NewsContainer />} />
       <Route path="/music" component={Music} />
     </main>
   );

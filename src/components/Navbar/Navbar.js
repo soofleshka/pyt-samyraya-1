@@ -3,7 +3,7 @@ import { NavLink } from "react-router-dom";
 import { NavbarFriendsContainer } from "./NavbarFriendsContainer/NavbarFriendsContainer";
 import styles from "./Navbar.module.css";
 
-export const Navbar = ({ store }) => {
+export const Navbar = () => {
   return (
     <nav className={styles.nav}>
       <ul>
@@ -29,7 +29,7 @@ export const Navbar = ({ store }) => {
         </li>
       </ul>
       <h3 className={styles.friends__title}>Friends</h3>
-      <NavbarFriendsContainer store={store} />
+      <NavbarFriendsContainer />
     </nav>
   );
 };

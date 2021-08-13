@@ -1,7 +1,8 @@
-import React from "react";
+import { connect } from "react-redux";
 import { NavbarFriends } from "./NavbarFriends/NavbarFriends";
 
-export const NavbarFriendsContainer = ({ store }) => {
-  let state = store.getState();
-  return <NavbarFriends friends={state.navbarPage.friends} />;
+const mapStateToProps = (state) => {
+  return { friends: state.navbarPage.friends };
 };
+
+export const NavbarFriendsContainer = connect(mapStateToProps)(NavbarFriends);
