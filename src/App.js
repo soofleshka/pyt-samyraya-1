@@ -10,7 +10,7 @@ function App({ state, dispatch }) {
       <div className="container">
         <Header />
         <Navbar friends={state.navbarPage.friends} />
-        <MainContent state={state.mainContentPage} dispatch={dispatch} />
+        <MainContent state={state} dispatch={dispatch} />
       </div>
     </BrowserRouter>
   );

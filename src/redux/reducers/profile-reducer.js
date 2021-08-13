@@ -1,7 +1,21 @@
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_POST = "CHANGE_NEW_POST";
 
-const profileReducer = (state, action) => {
+let initialState = {
+  posts: [
+    { id: 1, post: "First post" },
+    { id: 2, post: "Hi everyone!" },
+    { id: 3, post: "Lorem ipsum dolor." },
+    {
+      id: 4,
+      post: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis!",
+    },
+    { id: 5, post: "Lorem ipsum dolor sit amet." },
+  ],
+  newPostText: "",
+};
+
+const profileReducer = (state = initialState, action) => {
   switch (action.type) {
     case ADD_POST:
       let newPost = {
@@ -14,8 +28,9 @@ const profileReducer = (state, action) => {
     case CHANGE_NEW_POST:
       state.newPostText = action.newPostTextValue;
       return state;
+    default:
+      return state;
   }
-  return state;
 };
 
 export const addPostActionCreator = () => ({ type: "ADD_POST" });
