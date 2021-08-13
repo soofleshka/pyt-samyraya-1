@@ -4,13 +4,13 @@ import { Navbar } from "./components/Navbar/Navbar";
 import { MainContent } from "./components/MainContent/MainContent";
 import { BrowserRouter } from "react-router-dom";
 
-function App({ state, dispatch }) {
+function App({ store }) {
   return (
     <BrowserRouter>
       <div className="container">
         <Header />
-        <Navbar friends={state.navbarPage.friends} />
-        <MainContent state={state} dispatch={dispatch} />
+        <Navbar store={store} />
+        <MainContent store={store} />
       </div>
     </BrowserRouter>
   );

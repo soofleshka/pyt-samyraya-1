@@ -1,23 +1,20 @@
 import React from "react";
 import styles from "./AddNews.module.css";
-import {
-  addNewsActionCreator,
-  changeNewNewsBodyActionCreator,
-  changeNewNewsTitleActionCreator,
-} from "../../../../redux/reducers/news-reducer";
 
-export const AddNews = ({ newNews, dispatch }) => {
+export const AddNews = ({
+  newNews,
+  newsTitleChange,
+  newsBodyChange,
+  addNewsClick,
+}) => {
   let newsTitleChangeHandler = (e) => {
-    let action = changeNewNewsTitleActionCreator(e.target.value);
-    dispatch(action);
+    newsTitleChange(e.target.value);
   };
   let newsBodyChangeHandler = (e) => {
-    let action = changeNewNewsBodyActionCreator(e.target.value);
-    dispatch(action);
+    newsBodyChange(e.target.value);
   };
   let addNewsClickHandler = () => {
-    let action = addNewsActionCreator();
-    dispatch(action);
+    addNewsClick();
   };
   return (
     <div className={styles.addNews}>

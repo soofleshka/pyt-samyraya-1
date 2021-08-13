@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./Profile.module.css";
-import { MyPosts } from "./MyPosts/MyPosts";
 import { ProfileInfo } from "./ProfileInfo/ProfileInfo";
+import { MyPostsContainer } from "./MyPostsContainer/MyPostsContainer";
+import styles from "./Profile.module.css";
 
-export const Profile = ({ state, dispatch }) => {
+export const Profile = ({ store }) => {
   return (
     <div className={styles.profile}>
       <img
@@ -11,11 +11,7 @@ export const Profile = ({ state, dispatch }) => {
         alt=""
       />
       <ProfileInfo />
-      <MyPosts
-        posts={state.posts}
-        newPostText={state.newPostText}
-        dispatch={dispatch}
-      />
+      <MyPostsContainer store={store} />
     </div>
   );
 };

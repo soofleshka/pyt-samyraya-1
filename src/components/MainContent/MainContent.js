@@ -1,26 +1,20 @@
 import React from "react";
-import styles from "./MainContent.module.css";
-import { Profile } from "./Profile/Profile";
-import { Dialogs } from "./Dialogs/Dialogs";
-import { News } from "./News/News";
-import { Music } from "./Music/Music";
 import { Route } from "react-router-dom";
+import { Profile } from "./Profile/Profile";
+import { DialogsContainer } from "./Dialogs/DialogsContainer";
+import { NewsContainer } from "./News/NewsContainer";
+import { Music } from "./Music/Music";
+import styles from "./MainContent.module.css";
 
-export const MainContent = ({ state, dispatch }) => {
+export const MainContent = ({ store }) => {
   return (
     <main>
-      <Route
-        path="/profile"
-        render={() => <Profile state={state.profilePage} dispatch={dispatch} />}
-      />
+      <Route path="/profile" render={() => <Profile store={store} />} />
       <Route
         path="/dialogs"
-        render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch} />}
+        render={() => <DialogsContainer store={store} />}
       />
-      <Route
-        path="/news"
-        render={() => <News state={state.newsPage} dispatch={dispatch} />}
-      />
+      <Route path="/news" render={() => <NewsContainer store={store} />} />
       <Route path="/music" component={Music} />
     </main>
   );

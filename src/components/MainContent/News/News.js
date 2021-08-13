@@ -3,12 +3,23 @@ import styles from "./News.module.css";
 import { NewsItem } from "./NewsItem/NewsItem";
 import { AddNews } from "./AddNews/AddNews";
 
-export const News = ({ state, dispatch }) => {
+export const News = ({
+  news,
+  newNews,
+  newsTitleChange,
+  newsBodyChange,
+  addNewsClick,
+}) => {
   return (
     <div className={styles.news}>
-      <AddNews newNews={state.newNews} dispatch={dispatch} />
+      <AddNews
+        newNews={newNews}
+        newsTitleChange={newsTitleChange}
+        newsBodyChange={newsBodyChange}
+        addNewsClick={addNewsClick}
+      />
       <div></div>
-      {state.news.map((n) => (
+      {news.map((n) => (
         <NewsItem key={n.id} title={n.title} body={n.body} />
       ))}
     </div>
