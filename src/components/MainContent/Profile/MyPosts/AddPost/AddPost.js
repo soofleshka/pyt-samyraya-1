@@ -3,7 +3,7 @@ import styles from "./AddPost.module.css";
 import {
   addPostActionCreator,
   changeNewPostActionCreator,
-} from "../../../../../redux/profile-reducer";
+} from "../../../../../redux/reducers/profile-reducer";
 
 export const AddPost = ({ newPostText, dispatch }) => {
   let addPostHandler = () => {

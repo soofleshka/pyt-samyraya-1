@@ -1,6 +1,7 @@
-import profileReducer from "./profile-reducer";
-import dialogsReducer from "./dialogs-reducer";
-import navbarFriendsReducer from "./navbar-friends-reducer";
+import profileReducer from "./reducers/profile-reducer";
+import dialogsReducer from "./reducers/dialogs-reducer";
+import navbarFriendsReducer from "./reducers/navbar-friends-reducer";
+import newsReducer from "./reducers/news-reducer";
 
 let store = {
   _state: {
@@ -36,6 +37,23 @@ let store = {
         ],
         newPostText: "",
       },
+      newsPage: {
+        news: [
+          {
+            id: 1,
+            title: "First news",
+            body:
+              "jadf asn;j fkasdjf asdjf asdkfas kdjasdj asldk,  asd jasdkg asd.sadas dasd jgasd" +
+              "sadkgasdlg asds.ad asdk;g jasd/ asdkg ;a'dkg as;jdgwqpe / adfsd ,dsfasd fasd fa. fasd fasdf asjdkqwe",
+          },
+          {
+            id: 2,
+            title: "Second news",
+            body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?",
+          },
+        ],
+        newNews: { title: "", body: "" },
+      },
     },
     navbarPage: {
       friends: [
@@ -69,6 +87,10 @@ let store = {
     );
     this._state.navbarPage = navbarFriendsReducer(
       this._state.navbarPage,
+      action
+    );
+    this._state.mainContentPage.newsPage = newsReducer(
+      this._state.mainContentPage.newsPage,
       action
     );
 

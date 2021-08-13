@@ -17,7 +17,10 @@ export const MainContent = ({ state, dispatch }) => {
         path="/dialogs"
         render={() => <Dialogs state={state.dialogsPage} dispatch={dispatch} />}
       />
-      <Route path="/news" component={News} />
+      <Route
+        path="/news"
+        render={() => <News state={state.newsPage} dispatch={dispatch} />}
+      />
       <Route path="/music" component={Music} />
     </main>
   );

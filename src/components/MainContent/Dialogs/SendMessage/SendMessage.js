@@ -3,7 +3,7 @@ import styles from "./SendMessage.module.css";
 import {
   changeNewMessageActionCreator,
   sendMessageActionCreator,
-} from "../../../../redux/dialogs-reducer";
+} from "../../../../redux/reducers/dialogs-reducer";
 
 export const SendMessage = ({ newMessageText, dispatch }) => {
   let sendMessageHandler = () => {
