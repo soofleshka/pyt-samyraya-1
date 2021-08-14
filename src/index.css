@@ -20,11 +20,6 @@ header{
     background-color: #124512;
 }
 
-nav{
-    grid-area: nav;
-    background-color: #514321;
-}
-
 main{
     grid-area: main;
     background-color: #f2351d;

@@ -1,25 +1,4 @@
-.nav ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-}
-
-.nav ul li {
-    padding: 5px 15px;
-}
-
-.nav a {
-    text-decoration: none;
-    color: #fff;
-}
-.nav a.active {
-    color: gold;
-    font-size: 40px;
-}
-
-.friends__title{
-    margin-left: 15px;
-    margin-bottom: 5px;
-    font-size: 45px;
-    color: yellow;
+.navbar{
+    grid-area: nav;
+    background-color: #514321;
 }

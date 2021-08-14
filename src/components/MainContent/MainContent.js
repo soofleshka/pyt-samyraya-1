@@ -5,14 +5,16 @@ import { DialogsContainer } from "./Dialogs/DialogsContainer";
 import { NewsContainer } from "./News/NewsContainer";
 import { Music } from "./Music/Music";
 import styles from "./MainContent.module.css";
+import UsersContainer from "./Users/UsersContainer";
 
 export const MainContent = () => {
   return (
     <main>
-      <Route path="/profile" render={() => <Profile />} />
-      <Route path="/dialogs" render={() => <DialogsContainer />} />
-      <Route path="/news" render={() => <NewsContainer />} />
+      <Route path="/profile" component={Profile} />
+      <Route path="/dialogs" component={DialogsContainer} />
+      <Route path="/news" component={NewsContainer} />
       <Route path="/music" component={Music} />
+      <Route path="/users" component={UsersContainer} />
     </main>
   );
 };
