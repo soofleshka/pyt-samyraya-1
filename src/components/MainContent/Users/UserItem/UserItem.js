@@ -1,11 +1,10 @@
 import React from "react";
-import styles from "./UserItem.module.css";
 import profile_default_img from "../../../../assets/images/default_profile_img.jpg";
+import styles from "./UserItem.module.css";
 
-const UserItem = ({ user, follow, unfollow, index }) => {
+const UserItem = ({ user, follow, unfollow }) => {
   return (
     <div className={styles.user}>
-      {index}.
       <div className={styles.followBlock}>
         <img
           src={user.photos.small ? user.photos.small : profile_default_img}
