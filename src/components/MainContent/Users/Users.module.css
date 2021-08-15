@@ -7,3 +7,12 @@
   margin: auto;
   padding: 5px 25px;
 }
+
+.activePage{
+  font-weight: bold;
+  color:white;
+}
+span{
+  display: inline-block;
+  margin-left: 3px;
+}
