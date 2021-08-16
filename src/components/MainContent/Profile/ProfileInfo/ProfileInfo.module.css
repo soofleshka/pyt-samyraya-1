@@ -1,3 +1,8 @@
 .profileInfo{
     padding: 5px;
 }
+
+.profileInfo >img{
+    width: 100%;
+    max-height: 200px;
+}

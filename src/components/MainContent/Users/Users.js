@@ -17,7 +17,7 @@ const Users = ({
 }) => {
   return (
     <div className={styles.users}>
-      <Preloader isFetching={isFetching} />
+      {isFetching && <Preloader />}
       <h4>Total Users: {totalUsers}</h4>
       <p>Pages:</p>
       {pagesLinks.map((p, index) => {

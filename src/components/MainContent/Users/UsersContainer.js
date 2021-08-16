@@ -15,8 +15,8 @@ import Users from "./Users";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    this.props.setIsFetching(true);
     if (this.props.users.length === 0) {
+      this.props.setIsFetching(true);
       axios
         .get(
           `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersCount}&page=${this.props.currentPage}`,

@@ -1,7 +1,9 @@
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_POST = "CHANGE_NEW_POST";
+const SET_USER_PROFILE = "SET_USER_PROFILE";
 
 let initialState = {
+  profile: null,
   posts: [
     { id: 1, post: "First post" },
     { id: 2, post: "Hi everyone!" },
@@ -25,15 +27,21 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, posts: [...state.posts, newPost], newPostText: "" };
     case CHANGE_NEW_POST:
       return { ...state, newPostText: action.newPostTextValue };
+    case SET_USER_PROFILE:
+      return { ...state, profile: action.profile };
     default:
       return state;
   }
 };
 
-export const addPostActionCreator = () => ({ type: "ADD_POST" });
-export const changeNewPostActionCreator = (newPostTextValue) => ({
-  type: "CHANGE_NEW_POST",
+export const addPost = () => ({ type: ADD_POST });
+export const changeNewPost = (newPostTextValue) => ({
+  type: CHANGE_NEW_POST,
   newPostTextValue: newPostTextValue,
+});
+export const setUserProfile = (profile) => ({
+  type: SET_USER_PROFILE,
+  profile,
 });
 
 export default profileReducer;

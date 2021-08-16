@@ -1,16 +1,19 @@
 import React from "react";
 import profile_default_img from "../../../../assets/images/default_profile_img.jpg";
 import styles from "./UserItem.module.css";
+import { NavLink } from "react-router-dom";
 
 const UserItem = ({ user, follow, unfollow }) => {
   return (
     <div className={styles.user}>
       <div className={styles.followBlock}>
-        <img
-          src={user.photos.small ? user.photos.small : profile_default_img}
-          alt="profile img"
-          className={styles.profile_img}
-        />
+        <NavLink to={`/profile/${user.id}`}>
+          <img
+            src={user.photos.small ? user.photos.small : profile_default_img}
+            alt="profile img"
+            className={styles.profile_img}
+          />
+        </NavLink>
         {user.followed === true ? (
           <button
             className={styles.follow_button}
