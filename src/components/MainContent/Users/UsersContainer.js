@@ -90,6 +90,23 @@ class UsersContainer extends React.Component {
   };
 
   render() {
+    const PAGES_LENGTH = 11;
+    let totalPagesCount = Math.ceil(
+      this.props.totalUsers / this.props.usersCount
+    );
+    const pagesCount =
+      totalPagesCount < PAGES_LENGTH ? totalPagesCount : PAGES_LENGTH;
+    const half = Math.floor(pagesCount / 2);
+    let startPage = this.props.currentPage - half;
+    if (startPage < 1) startPage = 1;
+    if (startPage + pagesCount > totalPagesCount)
+      startPage = totalPagesCount - pagesCount;
+    const pagesLinks = [];
+    if (this.props.users.length !== 0) {
+      for (let i = startPage; i < startPage + PAGES_LENGTH; i++) {
+        pagesLinks.push(i);
+      }
+    }
     return (
       <Users
         users={this.props.users}
@@ -99,12 +116,14 @@ class UsersContainer extends React.Component {
         usersCount={this.props.usersCount}
         currentPage={this.props.currentPage}
         isFetching={this.props.isFetching}
+        pagesLinks={pagesLinks}
         showMoreButtonClickHandler={this.showMoreButtonClickHandler}
         pagesLinkClickHandler={this.pagesLinkClickHandler}
       />
     );
   }
 }
+
 const mapStateToProps = (state) => {
   return {
     users: state.usersPage.users,
@@ -114,7 +133,6 @@ const mapStateToProps = (state) => {
     isFetching: state.usersPage.isFetching,
   };
 };
-
 const actionCreators = {
   follow,
   unfollow,
