@@ -1,6 +1,7 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
 import styles from "./Users.module.css";
+import preloader from "../../../assets/images/preloader.gif";
 
 const Users = ({
   users,
@@ -9,6 +10,7 @@ const Users = ({
   totalUsers,
   usersCount,
   currentPage,
+  isFetching,
   showMoreButtonClickHandler,
   pagesLinkClickHandler,
 }) => {
@@ -22,12 +24,19 @@ const Users = ({
   if (startPage + pagesCount > totalPagesCount)
     startPage = totalPagesCount - pagesCount;
   const pagesLinks = [];
-  for (let i = startPage; i < startPage + PAGES_LENGTH; i++) {
-    pagesLinks.push(i);
+  if (users.length != 0) {
+    for (let i = startPage; i < startPage + PAGES_LENGTH; i++) {
+      pagesLinks.push(i);
+    }
   }
 
   return (
     <div className={styles.users}>
+      {isFetching && (
+        <p>
+          Loading <img src={preloader} alt="preloader gif" />
+        </p>
+      )}
       <div>
         <h4>Total Users: {totalUsers}</h4>
         <p>Pages:</p>
@@ -42,14 +51,15 @@ const Users = ({
             </span>
           );
         })}
+        {users.map((u) => (
+          <UserItem key={u.id} user={u} follow={follow} unfollow={unfollow} />
+        ))}
       </div>
-      {users.map((u) => (
-        <UserItem key={u.id} user={u} follow={follow} unfollow={unfollow} />
-      ))}
       {currentPage === 1 && usersCount <= 100 && (
         <button
           onClick={showMoreButtonClickHandler}
           className={styles.showMore_Button}
+          disabled={isFetching}
         >
           Show more
         </button>
