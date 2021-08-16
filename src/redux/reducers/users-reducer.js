@@ -10,7 +10,7 @@ const initialState = {
   users: [],
   currentPage: 1,
   totalUsers: 0,
-  usersCount: 2,
+  usersCount: 4,
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -52,25 +52,25 @@ let usersReducer = (state = initialState, action) => {
   }
 };
 
-export const followAC = (userId) => {
+export const follow = (userId) => {
   return { type: FOLLOW, userId };
 };
-export const unfollowAC = (userId) => {
+export const unfollow = (userId) => {
   return { type: UNFOLLOW, userId };
 };
-export const setUsersAC = (users) => {
+export const setUsers = (users) => {
   return { type: SET_USERS, users };
 };
-export const addUsersAC = (users) => {
+export const addUsers = (users) => {
   return { type: ADD_USERS, users };
 };
-export const setTotalUsersAC = (totalUsers) => {
+export const setTotalUsers = (totalUsers) => {
   return { type: SET_TOTAL_USERS, totalUsers };
 };
-export const setCurrentPageAC = (currentPage) => {
+export const setCurrentPage = (currentPage) => {
   return { type: SET_CURRENT_PAGE, currentPage };
 };
-export const doubleUsersCountAC = () => {
+export const doubleUsersCount = () => {
   return { type: DOUBLE_USERS_COUNT };
 };
 
