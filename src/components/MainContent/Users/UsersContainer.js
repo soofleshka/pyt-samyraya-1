@@ -1,15 +1,20 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import {
   addUsers,
   doubleUsersCount,
-  follow,
+  followUser,
   setCurrentPage,
   setTotalUsers,
   setUsers,
-  unfollow,
+  toggleFollowButton,
+  unfollowUser,
 } from "../../../redux/reducers/users-reducer";
+import {
+  followUserAPI,
+  getUsersAPI,
+  unfollowUserAPI,
+} from "../../../DAL/samuraiAPI/samuraiAPI";
 import Users from "./Users";
 
 const UsersContainer = ({
@@ -19,41 +24,34 @@ const UsersContainer = ({
   usersCount,
   follow,
   unfollow,
+  disabledFollowButtons,
   setUsers,
   addUsers,
   setTotalUsers,
   setCurrentPage,
   doubleUsersCount,
+  toggleFollowButton,
 }) => {
   const [loading, setLoading] = useState(false);
   const [pageLinks, setPageLinks] = useState([]);
 
   useEffect(() => {
     setLoading(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${usersCount}&page=${currentPage}`,
-        {
-          headers: {
-            "API-KEY": "cfb3f52a-7e3d-4920-95ca-8ceabe83e146",
-          },
+
+    getUsersAPI(usersCount <= 100 ? usersCount : usersCount / 2, currentPage)
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          setUsers(data.items);
+          setTotalUsers(data.totalCount);
         }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.error) {
-            console.log(response.data.error);
-            return;
-          }
-          setLoading(false);
-          setUsers(response.data.items);
-          setTotalUsers(response.data.totalCount);
-        }
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e);
+        setLoading(false);
       });
-    return () => {
-      setUsers([]);
-      setTotalUsers(0);
-    };
   }, [currentPage]);
 
   useEffect(() => {
@@ -75,35 +73,52 @@ const UsersContainer = ({
 
       setPageLinks(tempPageLinks);
     }
-  }, [totalUsers, usersCount]);
+  }, [totalUsers, usersCount, currentPage]);
 
-  let showMoreUsersButtonHandler = () => {
+  const showMoreUsersButtonHandler = () => {
     setLoading(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${usersCount}&page=${
-          currentPage + 1
-        }`,
-        {
-          headers: {
-            "API-KEY": "cfb3f52a-7e3d-4920-95ca-8ceabe83e146",
-          },
-        }
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.error) {
-            console.log(response.data.error);
-            return;
-          }
-          setLoading(false);
-          addUsers(response.data.items);
+    getUsersAPI(usersCount, currentPage + 1)
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          addUsers(data.items);
           doubleUsersCount();
         }
+        setLoading(false);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        setLoading(false);
       });
   };
-  let pageLinkClickHandler = (p) => {
+  const pageLinkClickHandler = (p) => {
     setCurrentPage(p);
+  };
+
+  const followButtonClickHandler = (userId) => {
+    toggleFollowButton(true, userId);
+    followUserAPI(userId)
+      .then((data) => {
+        if (data.resultCode === 0) follow(userId);
+        toggleFollowButton(false, userId);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        toggleFollowButton(false, userId);
+      });
+  };
+  const unfollowButtonClickHandler = (userId) => {
+    toggleFollowButton(true, userId);
+    unfollowUserAPI(userId)
+      .then((data) => {
+        if (data.resultCode === 0) unfollow(userId);
+        toggleFollowButton(false, userId);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        toggleFollowButton(false, userId);
+      });
   };
 
   return (
@@ -111,8 +126,10 @@ const UsersContainer = ({
       users={users}
       currentPage={currentPage}
       totalUsers={totalUsers}
-      follow={follow}
-      unfollow={unfollow}
+      usersCount={usersCount}
+      followButtonClickHandler={followButtonClickHandler}
+      unfollowButtonClickHandler={unfollowButtonClickHandler}
+      disabledFollowButtons={disabledFollowButtons}
       loading={loading}
       pageLinks={pageLinks}
       showMoreUsersButtonHandler={showMoreUsersButtonHandler}
@@ -127,17 +144,19 @@ const mapStateToProps = (state) => {
     currentPage: state.usersPage.currentPage,
     totalUsers: state.usersPage.totalUsers,
     usersCount: state.usersPage.usersCount,
+    disabledFollowButtons: state.usersPage.disabledFollowButtons,
   };
 };
 
 const actionCreators = {
-  follow,
-  unfollow,
+  follow: followUser,
+  unfollow: unfollowUser,
   setUsers,
   addUsers,
   setTotalUsers,
   setCurrentPage,
   doubleUsersCount,
+  toggleFollowButton,
 };
 
 export default connect(mapStateToProps, actionCreators)(UsersContainer);

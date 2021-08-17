@@ -5,12 +5,14 @@ const ADD_USERS = "ADD_USERS";
 const SET_TOTAL_USERS = "SET_TOTAL_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const DOUBLE_USERS_COUNT = "DOUBLE_USERS_COUNT";
+const TOGGLE_DISABLED_FOLLOW_BUTTON = "TOGGLE_DISABLED_FOLLOW_BUTTON";
 
 const initialState = {
   users: [],
   currentPage: 1,
   totalUsers: 0,
   usersCount: 4,
+  disabledFollowButtons: [],
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -47,15 +49,23 @@ let usersReducer = (state = initialState, action) => {
     case DOUBLE_USERS_COUNT: {
       return { ...state, usersCount: state.usersCount * 2 };
     }
+    case TOGGLE_DISABLED_FOLLOW_BUTTON: {
+      return {
+        ...state,
+        disabledFollowButtons: action.isFetching
+          ? [...state.disabledFollowButtons, action.userId]
+          : state.disabledFollowButtons.filter((dfb) => dfb !== action.userId),
+      };
+    }
     default:
       return state;
   }
 };
 
-export const follow = (userId) => {
+export const followUser = (userId) => {
   return { type: FOLLOW, userId };
 };
-export const unfollow = (userId) => {
+export const unfollowUser = (userId) => {
   return { type: UNFOLLOW, userId };
 };
 export const setUsers = (users) => {
@@ -72,6 +82,9 @@ export const setCurrentPage = (currentPage) => {
 };
 export const doubleUsersCount = () => {
   return { type: DOUBLE_USERS_COUNT };
+};
+export const toggleFollowButton = (isFetching, userId) => {
+  return { type: TOGGLE_DISABLED_FOLLOW_BUTTON, isFetching, userId };
 };
 
 export default usersReducer;

@@ -7,8 +7,10 @@ const Users = ({
   users,
   currentPage,
   totalUsers,
-  follow,
-  unfollow,
+  usersCount,
+  followButtonClickHandler,
+  unfollowButtonClickHandler,
+  disabledFollowButtons,
   loading,
   pageLinks,
   showMoreUsersButtonHandler,
@@ -16,7 +18,7 @@ const Users = ({
 }) => {
   return (
     <div className={styles.users}>
-      <Preloader loading={loading} />
+      {loading && <Preloader />}
       <h4>TotalUsers: {totalUsers}</h4>
       <p>links:</p>
       {pageLinks.map((p, index) => {
@@ -31,9 +33,15 @@ const Users = ({
         );
       })}
       {users.map((u) => (
-        <UserItem key={u.id} user={u} follow={follow} unfollow={unfollow} />
+        <UserItem
+          key={u.id}
+          user={u}
+          followButtonClickHandler={followButtonClickHandler}
+          unfollowButtonClickHandler={unfollowButtonClickHandler}
+          disabledFollowButtons={disabledFollowButtons}
+        />
       ))}
-      {currentPage === 1 && (
+      {currentPage === 1 && usersCount <= 100 && (
         <button
           onClick={showMoreUsersButtonHandler}
           className={styles.showMore_Button}

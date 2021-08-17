@@ -1,15 +1,11 @@
 import React from "react";
 import preloader from "../../../assets/images/preloader.gif";
 
-const Preloader = ({ loading }) => {
+const Preloader = () => {
   return (
-    <>
-      {loading ? (
-        <p>
-          Loading <img src={preloader} alt="preloader gif" />
-        </p>
-      ) : null}
-    </>
+    <p>
+      Loading <img src={preloader} alt="preloader gif" />
+    </p>
   );
 };
 

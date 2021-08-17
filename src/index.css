@@ -18,6 +18,8 @@ a{
 header{
     grid-area: head;
     background-color: #124512;
+    display: flex;
+    justify-content: space-between;
 }
 
 main{
