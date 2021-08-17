@@ -1,6 +1,7 @@
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_POST = "CHANGE_NEW_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
+const SET_IS_FETCHING = "SET_IS_FETCHING";
 
 let initialState = {
   profile: null,
@@ -15,6 +16,7 @@ let initialState = {
     { id: 5, post: "Lorem ipsum dolor sit amet." },
   ],
   newPostText: "",
+  isFetching: false,
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -29,6 +31,8 @@ const profileReducer = (state = initialState, action) => {
       return { ...state, newPostText: action.newPostTextValue };
     case SET_USER_PROFILE:
       return { ...state, profile: action.profile };
+    case SET_IS_FETCHING:
+      return { ...state, isFetching: action.isFetching };
     default:
       return state;
   }
@@ -43,5 +47,8 @@ export const setUserProfile = (profile) => ({
   type: SET_USER_PROFILE,
   profile,
 });
+export const setIsFetching = (isFetching) => {
+  return { type: SET_IS_FETCHING, isFetching };
+};
 
 export default profileReducer;

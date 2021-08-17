@@ -12,7 +12,7 @@
   font-weight: bold;
   color:white;
 }
-span{
+.pageLink{
   display: inline-block;
   margin-left: 3px;
 }

@@ -1,13 +1,8 @@
-.logo{
+.authInfo{
     text-decoration: none;
     color: #fff;
     display: inline-flex;
     align-items: center;
     height: 100%;
     padding: 0 20px;
-}
-
-header{
-    display: flex;
-    justify-content: space-between;
 }

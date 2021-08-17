@@ -2,11 +2,11 @@ import React from "react";
 import styles from "./ProfileInfo.module.css";
 import profile_img from "../../../../assets/images/profile_img_gag.jpeg";
 
-export const ProfileInfo = ({ profile }) => {
+export const ProfileInfo = ({ profile, myUserId }) => {
   return (
     <div className={styles.profileInfo}>
       <img src={profile_img} alt="profile img" />
-      <h3>My profile</h3>
+      {profile.userId === myUserId && <h3>My profile</h3>}
       <div>
         <img src={profile.photos.small} alt="users avatar" /> {profile.fullName}
         <p>{profile.aboutMe}</p>

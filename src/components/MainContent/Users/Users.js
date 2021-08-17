@@ -1,7 +1,7 @@
 import React from "react";
 import UserItem from "./UserItem/UserItem";
-import styles from "./Users.module.css";
 import Preloader from "../../Preloader/Preloader";
+import styles from "./Users.module.css";
 
 const Users = ({
   users,
@@ -25,7 +25,9 @@ const Users = ({
           <span
             key={index}
             onClick={pagesLinkClickHandler.bind(this, p)}
-            className={currentPage === p ? styles.activePage : undefined}
+            className={`${styles.pageLink} ${
+              currentPage === p ? styles.activePage : undefined
+            }`}
           >
             {p}
           </span>
