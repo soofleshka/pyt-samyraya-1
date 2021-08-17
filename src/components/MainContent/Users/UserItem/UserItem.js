@@ -3,7 +3,12 @@ import profile_default_img from "../../../../assets/images/default_profile_img.j
 import styles from "./UserItem.module.css";
 import { NavLink } from "react-router-dom";
 
-const UserItem = ({ user, follow, unfollow }) => {
+const UserItem = ({
+  user,
+  disabledFollowButtons,
+  followButtonClickHandler,
+  unfollowButtonClickHandler,
+}) => {
   return (
     <div className={styles.user}>
       <div className={styles.followBlock}>
@@ -17,14 +22,16 @@ const UserItem = ({ user, follow, unfollow }) => {
         {user.followed === true ? (
           <button
             className={styles.follow_button}
-            onClick={unfollow.bind(this, user.id)}
+            onClick={unfollowButtonClickHandler.bind(this, user.id)}
+            disabled={disabledFollowButtons.some((id) => id === user.id)}
           >
             Unfollow
           </button>
         ) : (
           <button
             className={styles.follow_button}
-            onClick={follow.bind(this, user.id)}
+            onClick={followButtonClickHandler.bind(this, user.id)}
+            disabled={disabledFollowButtons.some((id) => id === user.id)}
           >
             Follow
           </button>

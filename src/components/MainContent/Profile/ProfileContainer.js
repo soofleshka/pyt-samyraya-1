@@ -1,11 +1,11 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import { Profile } from "./Profile";
 import {
   setIsFetching,
   setUserProfile,
 } from "../../../redux/reducers/profile-reducer";
+import { getProfileAPI } from "../../../DAL/samuraiAPI/samuraiAPI";
 import Preloader from "../../Preloader/Preloader";
 
 class ProfileContainer extends React.Component {
@@ -16,22 +16,18 @@ class ProfileContainer extends React.Component {
     if (!userId) return;
 
     this.props.setIsFetching(true);
-    axios
-      .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-      .then((response) => {
-        this.props.setUserProfile(response.data);
-        this.props.setIsFetching(false);
-      });
+    getProfileAPI(userId).then((data) => {
+      this.props.setUserProfile(data);
+      this.props.setIsFetching(false);
+    });
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.myUserId !== this.props.myUserId) {
       this.props.setUserProfile(null);
       let userId = this.props.match.params.userId || this.props.myUserId || 2;
-      axios
-        .get(`https://social-network.samuraijs.com/api/1.0/profile/${userId}`)
-        .then((response) => {
-          this.props.setUserProfile(response.data);
-        });
+      getProfileAPI(userId).then((data) => {
+        this.props.setUserProfile(data);
+      });
     }
   }
 

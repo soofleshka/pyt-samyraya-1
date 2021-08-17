@@ -5,13 +5,14 @@ import styles from "./Users.module.css";
 
 const Users = ({
   users,
-  follow,
-  unfollow,
   totalUsers,
   usersCount,
   currentPage,
   isFetching,
   pagesLinks,
+  disabledFollowButtons,
+  followButtonClickHandler,
+  unfollowButtonClickHandler,
   showMoreButtonClickHandler,
   pagesLinkClickHandler,
 }) => {
@@ -34,7 +35,13 @@ const Users = ({
         );
       })}
       {users.map((u) => (
-        <UserItem key={u.id} user={u} follow={follow} unfollow={unfollow} />
+        <UserItem
+          key={u.id}
+          user={u}
+          disabledFollowButtons={disabledFollowButtons}
+          followButtonClickHandler={followButtonClickHandler}
+          unfollowButtonClickHandler={unfollowButtonClickHandler}
+        />
       ))}
       {currentPage === 1 && usersCount <= 100 && (
         <button

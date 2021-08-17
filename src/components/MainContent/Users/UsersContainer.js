@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import axios from "axios";
 import {
   addUsers,
   doubleUsersCount,
@@ -9,68 +8,98 @@ import {
   setIsFetching,
   setTotalUsers,
   setUsers,
+  toggleDisabledFollowButtons,
   unfollow,
 } from "../../../redux/reducers/users-reducer";
 import Users from "./Users";
+import {
+  followUserAPI,
+  getUsersAPI,
+  unfollowUserAPI,
+} from "../../../DAL/samuraiAPI/samuraiAPI";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
     if (this.props.users.length === 0) {
       this.props.setIsFetching(true);
-      axios
-        .get(
-          `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersCount}&page=${this.props.currentPage}`
-        )
-        .then((response) => {
-          if (response.status === 200) {
-            if (response.data.error) {
-              console.log(response.data.error);
-              return;
-            }
-            this.props.setUsers(response.data.items);
-            this.props.setTotalUsers(response.data.totalCount);
-            this.props.setIsFetching(false);
+      getUsersAPI(this.props.usersCount, this.props.currentPage)
+        .then((data) => {
+          if (data.error) {
+            console.log(data.error);
+          } else {
+            this.props.setUsers(data.items);
+            this.props.setTotalUsers(data.totalCount);
           }
+          this.props.setIsFetching(false);
+        })
+        .catch((e) => {
+          console.log(e.message);
+          this.props.setIsFetching(false);
         });
     }
   }
 
   showMoreButtonClickHandler = () => {
     this.props.setIsFetching(true);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${
-          this.props.usersCount
-        }&page=${this.props.currentPage + 1}`
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.error) {
-            console.log(response.data.error);
-            return;
-          }
-          this.props.addUsers(response.data.items);
+    getUsersAPI(this.props.usersCount, this.props.currentPage + 1)
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          this.props.addUsers(data.items);
           this.props.doubleUsersCount();
-          this.props.setIsFetching(false);
         }
+        this.props.setIsFetching(false);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        this.props.setIsFetching(false);
       });
   };
   pagesLinkClickHandler = (pageNumber) => {
     this.props.setIsFetching(true);
     this.props.setCurrentPage(pageNumber);
-    axios
-      .get(
-        `https://social-network.samuraijs.com/api/1.0/users?count=${this.props.usersCount}&page=${pageNumber}`
-      )
-      .then((response) => {
-        if (response.status === 200) {
-          if (response.data.error) {
-            console.log(response.data.error);
-            return;
-          }
-          this.props.setUsers(response.data.items);
-          this.props.setIsFetching(false);
+    getUsersAPI(this.props.usersCount, pageNumber)
+      .then((data) => {
+        if (data.error) {
+          console.log(data.error);
+        } else {
+          this.props.setUsers(data.items);
         }
+        this.props.setIsFetching(false);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        this.props.setIsFetching(false);
+      });
+  };
+
+  followButtonClickHandler = (userId) => {
+    this.props.toggleDisabledFollowButtons(true, userId);
+    followUserAPI(userId)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          this.props.follow(userId);
+        }
+        this.props.toggleDisabledFollowButtons(false, userId);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        this.props.toggleDisabledFollowButtons(false, userId);
+      });
+  };
+  unfollowButtonClickHandler = (userId) => {
+    this.props.toggleDisabledFollowButtons(true, userId);
+    unfollowUserAPI(userId)
+      .then((data) => {
+        if (data.resultCode === 0) {
+          this.props.unfollow(userId);
+        }
+        this.props.toggleDisabledFollowButtons(false, userId);
+      })
+      .catch((e) => {
+        console.log(e.message);
+        this.props.toggleDisabledFollowButtons(false, userId);
       });
   };
 
@@ -94,14 +123,10 @@ class UsersContainer extends React.Component {
     }
     return (
       <Users
-        users={this.props.users}
-        follow={this.props.follow}
-        unfollow={this.props.unfollow}
-        totalUsers={this.props.totalUsers}
-        usersCount={this.props.usersCount}
-        currentPage={this.props.currentPage}
-        isFetching={this.props.isFetching}
+        {...this.props}
         pagesLinks={pagesLinks}
+        followButtonClickHandler={this.followButtonClickHandler}
+        unfollowButtonClickHandler={this.unfollowButtonClickHandler}
         showMoreButtonClickHandler={this.showMoreButtonClickHandler}
         pagesLinkClickHandler={this.pagesLinkClickHandler}
       />
@@ -116,6 +141,7 @@ const mapStateToProps = (state) => {
     usersCount: state.usersPage.usersCount,
     totalUsers: state.usersPage.totalUsers,
     isFetching: state.usersPage.isFetching,
+    disabledFollowButtons: state.usersPage.disabledFollowButtons,
   };
 };
 const actionCreators = {
@@ -127,6 +153,7 @@ const actionCreators = {
   setCurrentPage,
   doubleUsersCount,
   setIsFetching,
+  toggleDisabledFollowButtons,
 };
 
 export default connect(mapStateToProps, actionCreators)(UsersContainer);

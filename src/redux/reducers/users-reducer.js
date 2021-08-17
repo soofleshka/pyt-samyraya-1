@@ -6,47 +6,15 @@ const SET_TOTAL_USERS = "SET_TOTAL_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const DOUBLE_USERS_COUNT = "DOUBLE_USERS_COUNT";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
+const TOGGLE_DISABLED_FOLLOW_BUTTON = "TOGGLE_DISABLED_FOLLOW_BUTTON";
 
 const initialState = {
-  // users: [
-  //   {
-  //     id: 1,
-  //     photoUrl: "",
-  //     isFollowed: true,
-  //     name: "Dmitriy",
-  //     status: "Yo",
-  //     location: { city: "Minsk", country: "Belarus" },
-  //   },
-  //   {
-  //     id: 2,
-  //     photoUrl: "",
-  //     isFollowed: false,
-  //     name: "Sasha",
-  //     status: "Yo 1",
-  //     location: { city: "Minsk", country: "Belarus" },
-  //   },
-  //   {
-  //     id: 3,
-  //     photoUrl: "",
-  //     isFollowed: false,
-  //     name: "Roma",
-  //     status: "Yo 2",
-  //     location: { city: "Minsk", country: "Belarus" },
-  //   },
-  //   {
-  //     id: 4,
-  //     photoUrl: "",
-  //     isFollowed: true,
-  //     name: "Tanya",
-  //     status: "Yo 3",
-  //     location: { city: "Minsk", country: "Belarus" },
-  //   },
-  // ],
   users: [],
   currentPage: 1,
   usersCount: 4,
   totalUsers: 0,
   isFetching: false,
+  disabledFollowButtons: [],
 };
 
 let usersReducer = (state = initialState, action) => {
@@ -80,6 +48,17 @@ let usersReducer = (state = initialState, action) => {
       return { ...state, currentPage: action.currentPage };
     case SET_IS_FETCHING:
       return { ...state, isFetching: action.isFetching };
+    case TOGGLE_DISABLED_FOLLOW_BUTTON:
+      return {
+        ...state,
+        disabledFollowButtons: action.isFetching
+          ? [...state.disabledFollowButtons, action.userId]
+          : [
+              ...state.disabledFollowButtons.filter(
+                (id) => id !== action.userId
+              ),
+            ],
+      };
     default:
       return state;
   }
@@ -108,6 +87,9 @@ export const doubleUsersCount = () => {
 };
 export const setIsFetching = (isFetching) => {
   return { type: SET_IS_FETCHING, isFetching };
+};
+export const toggleDisabledFollowButtons = (isFetching, userId) => {
+  return { type: TOGGLE_DISABLED_FOLLOW_BUTTON, isFetching, userId };
 };
 
 export default usersReducer;
