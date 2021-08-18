@@ -1,7 +1,13 @@
+import {
+  followUserAPI,
+  getUsersAPI,
+  unfollowUserAPI,
+} from "../../DAL/samuraiAPI/samuraiAPI";
+
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
 const SET_USERS = "SET_USERS";
-const ADD_USERS = "ADD_USERS";
+const ADD_USERS_TO_STATE = "ADD_USERS_TO_STATE";
 const SET_TOTAL_USERS = "SET_TOTAL_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const DOUBLE_USERS_COUNT = "DOUBLE_USERS_COUNT";
@@ -38,7 +44,7 @@ let usersReducer = (state = initialState, action) => {
     }
     case SET_USERS:
       return { ...state, users: action.users };
-    case ADD_USERS:
+    case ADD_USERS_TO_STATE:
       return { ...state, users: [...state.users, ...action.users] };
     case DOUBLE_USERS_COUNT:
       return { ...state, usersCount: state.usersCount * 2 };
@@ -64,17 +70,17 @@ let usersReducer = (state = initialState, action) => {
   }
 };
 
-export const follow = (userId) => {
+export const followSuccess = (userId) => {
   return { type: FOLLOW, userId };
 };
-export const unfollow = (userId) => {
+export const unfollowSuccess = (userId) => {
   return { type: UNFOLLOW, userId };
 };
 export const setUsers = (users) => {
   return { type: SET_USERS, users };
 };
-export const addUsers = (users) => {
-  return { type: ADD_USERS, users };
+export const addUsersToState = (users) => {
+  return { type: ADD_USERS_TO_STATE, users };
 };
 export const setTotalUsers = (totalUsers) => {
   return { type: SET_TOTAL_USERS, totalUsers };
@@ -90,6 +96,68 @@ export const setIsFetching = (isFetching) => {
 };
 export const toggleDisabledFollowButtons = (isFetching, userId) => {
   return { type: TOGGLE_DISABLED_FOLLOW_BUTTON, isFetching, userId };
+};
+
+export const getUsers = (usersCount, currentPage) => (dispatch) => {
+  dispatch(setIsFetching(true));
+  getUsersAPI(usersCount, currentPage)
+    .then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch(setTotalUsers(data.totalCount));
+        dispatch(setCurrentPage(currentPage));
+        dispatch(setUsers(data.items));
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    })
+    .finally(() => dispatch(setIsFetching(false)));
+};
+export const addUsers = (usersCount, currentPage) => (dispatch) => {
+  dispatch(setIsFetching(true));
+  getUsersAPI(usersCount, currentPage + 1)
+    .then((data) => {
+      if (data.error) {
+        console.log(data.error);
+      } else {
+        dispatch(doubleUsersCount());
+        dispatch(addUsersToState(data.items));
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    })
+    .finally(() => dispatch(setIsFetching(false)));
+};
+
+export const follow = (userId) => (dispatch) => {
+  dispatch(toggleDisabledFollowButtons(true, userId));
+  followUserAPI(userId)
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(followSuccess(userId));
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    })
+    .finally(() => dispatch(toggleDisabledFollowButtons(false, userId)));
+};
+
+export const unfollow = (userId) => (dispatch) => {
+  dispatch(toggleDisabledFollowButtons(true, userId));
+  unfollowUserAPI(userId)
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(unfollowSuccess(userId));
+      }
+    })
+    .catch((e) => {
+      console.log(e.message);
+    })
+    .finally(() => dispatch(toggleDisabledFollowButtons(false, userId)));
 };
 
 export default usersReducer;

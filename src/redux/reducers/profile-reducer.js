@@ -1,3 +1,5 @@
+import { getProfileAPI } from "../../DAL/samuraiAPI/samuraiAPI";
+
 const ADD_POST = "ADD_POST";
 const CHANGE_NEW_POST = "CHANGE_NEW_POST";
 const SET_USER_PROFILE = "SET_USER_PROFILE";
@@ -49,6 +51,18 @@ export const setUserProfile = (profile) => ({
 });
 export const setIsFetching = (isFetching) => {
   return { type: SET_IS_FETCHING, isFetching };
+};
+
+export const getProfile = (userId) => (dispatch) => {
+  dispatch(setIsFetching(true));
+  getProfileAPI(userId)
+    .then((data) => {
+      dispatch(setUserProfile(data));
+    })
+    .catch((e) => {
+      console.log(e.message);
+    })
+    .finally(() => dispatch(setIsFetching(false)));
 };
 
 export default profileReducer;

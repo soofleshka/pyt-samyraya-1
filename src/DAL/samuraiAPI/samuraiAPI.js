@@ -22,7 +22,7 @@ export const unfollowUserAPI = (userId) => {
   return instance.delete(`/follow/${userId}`).then((response) => response.data);
 };
 
-export const authAPI = () => {
+export const authMeAPI = () => {
   return instance.get("/auth/me").then((response) => response.data);
 };
 

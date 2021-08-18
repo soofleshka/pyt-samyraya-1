@@ -2,10 +2,9 @@ import React from "react";
 import { connect } from "react-redux";
 import { Profile } from "./Profile";
 import {
-  setIsFetching,
+  getProfile,
   setUserProfile,
 } from "../../../redux/reducers/profile-reducer";
-import { getProfileAPI } from "../../../DAL/samuraiAPI/samuraiAPI";
 import Preloader from "../../Preloader/Preloader";
 
 class ProfileContainer extends React.Component {
@@ -15,19 +14,14 @@ class ProfileContainer extends React.Component {
       this.props.match.params.userId || this.props.myUserId || undefined;
     if (!userId) return;
 
-    this.props.setIsFetching(true);
-    getProfileAPI(userId).then((data) => {
-      this.props.setUserProfile(data);
-      this.props.setIsFetching(false);
-    });
+    this.props.getProfile(userId);
   }
   componentDidUpdate(prevProps, prevState, snapshot) {
     if (prevProps.myUserId !== this.props.myUserId) {
       this.props.setUserProfile(null);
       let userId = this.props.match.params.userId || this.props.myUserId || 2;
-      getProfileAPI(userId).then((data) => {
-        this.props.setUserProfile(data);
-      });
+
+      this.props.getProfile(userId);
     }
   }
 
@@ -47,6 +41,6 @@ const mapStateToProps = (state) => {
     isAuth: state.auth.isAuth,
   };
 };
-const actionCreators = { setUserProfile, setIsFetching };
+const actionCreators = { setUserProfile, getProfile };
 
 export default connect(mapStateToProps, actionCreators)(ProfileContainer);

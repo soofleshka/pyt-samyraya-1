@@ -2,105 +2,29 @@ import React from "react";
 import { connect } from "react-redux";
 import {
   addUsers,
-  doubleUsersCount,
   follow,
-  setCurrentPage,
-  setIsFetching,
-  setTotalUsers,
-  setUsers,
-  toggleDisabledFollowButtons,
+  getUsers,
   unfollow,
 } from "../../../redux/reducers/users-reducer";
 import Users from "./Users";
-import {
-  followUserAPI,
-  getUsersAPI,
-  unfollowUserAPI,
-} from "../../../DAL/samuraiAPI/samuraiAPI";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
-    if (this.props.users.length === 0) {
-      this.props.setIsFetching(true);
-      getUsersAPI(this.props.usersCount, this.props.currentPage)
-        .then((data) => {
-          if (data.error) {
-            console.log(data.error);
-          } else {
-            this.props.setUsers(data.items);
-            this.props.setTotalUsers(data.totalCount);
-          }
-          this.props.setIsFetching(false);
-        })
-        .catch((e) => {
-          console.log(e.message);
-          this.props.setIsFetching(false);
-        });
-    }
+    this.props.getUsers(this.props.usersCount, this.props.currentPage);
   }
 
   showMoreButtonClickHandler = () => {
-    this.props.setIsFetching(true);
-    getUsersAPI(this.props.usersCount, this.props.currentPage + 1)
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          this.props.addUsers(data.items);
-          this.props.doubleUsersCount();
-        }
-        this.props.setIsFetching(false);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        this.props.setIsFetching(false);
-      });
+    this.props.addUsers(this.props.usersCount, this.props.currentPage);
   };
   pagesLinkClickHandler = (pageNumber) => {
-    this.props.setIsFetching(true);
-    this.props.setCurrentPage(pageNumber);
-    getUsersAPI(this.props.usersCount, pageNumber)
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          this.props.setUsers(data.items);
-        }
-        this.props.setIsFetching(false);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        this.props.setIsFetching(false);
-      });
+    this.props.getUsers(this.props.usersCount, pageNumber);
   };
 
   followButtonClickHandler = (userId) => {
-    this.props.toggleDisabledFollowButtons(true, userId);
-    followUserAPI(userId)
-      .then((data) => {
-        if (data.resultCode === 0) {
-          this.props.follow(userId);
-        }
-        this.props.toggleDisabledFollowButtons(false, userId);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        this.props.toggleDisabledFollowButtons(false, userId);
-      });
+    this.props.follow(userId);
   };
   unfollowButtonClickHandler = (userId) => {
-    this.props.toggleDisabledFollowButtons(true, userId);
-    unfollowUserAPI(userId)
-      .then((data) => {
-        if (data.resultCode === 0) {
-          this.props.unfollow(userId);
-        }
-        this.props.toggleDisabledFollowButtons(false, userId);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        this.props.toggleDisabledFollowButtons(false, userId);
-      });
+    this.props.unfollow(userId);
   };
 
   render() {
@@ -147,13 +71,8 @@ const mapStateToProps = (state) => {
 const actionCreators = {
   follow,
   unfollow,
-  setUsers,
   addUsers,
-  setTotalUsers,
-  setCurrentPage,
-  doubleUsersCount,
-  setIsFetching,
-  toggleDisabledFollowButtons,
+  getUsers,
 };
 
 export default connect(mapStateToProps, actionCreators)(UsersContainer);
