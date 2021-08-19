@@ -6,29 +6,30 @@ import {
   setUserProfile,
 } from "../../../redux/reducers/profile-reducer";
 import Preloader from "../../Preloader/Preloader";
+import withAuthRedirect from "../../../HOC/withAuthRedirect";
+import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
+    this.getProfile();
+  }
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.match.params.userId !== this.props.match.params.userId) {
+      this.getProfile();
+    }
+  }
+
+  getProfile = () => {
     this.props.setUserProfile(null);
     let userId =
       this.props.match.params.userId || this.props.myUserId || undefined;
     if (!userId) return;
-
     this.props.getProfile(userId);
-  }
-  componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.myUserId !== this.props.myUserId) {
-      this.props.setUserProfile(null);
-      let userId = this.props.match.params.userId || this.props.myUserId || 2;
-
-      this.props.getProfile(userId);
-    }
-  }
+  };
 
   render() {
-    if (!this.props.isAuth && !this.props.profile)
-      return <h3>Вы не авторизаваны</h3>;
-    if (this.props.isFetching || !this.props.profile) return <Preloader />;
+    if (this.props.isFetching) return <Preloader />;
+    if (!this.props.profile) return <p>Профиль не найден</p>;
     return <Profile {...this.props} />;
   }
 }
@@ -38,9 +39,11 @@ const mapStateToProps = (state) => {
     profile: state.profilePage.profile,
     isFetching: state.profilePage.isFetching,
     myUserId: state.auth.userId,
-    isAuth: state.auth.isAuth,
   };
 };
 const actionCreators = { setUserProfile, getProfile };
 
-export default connect(mapStateToProps, actionCreators)(ProfileContainer);
+export default compose(
+  connect(mapStateToProps, actionCreators),
+  withAuthRedirect
+)(ProfileContainer);

@@ -7,6 +7,8 @@ import {
   unfollow,
 } from "../../../redux/reducers/users-reducer";
 import Users from "./Users";
+import { compose } from "redux";
+import withAuthRedirect from "../../../HOC/withAuthRedirect";
 
 class UsersContainer extends React.Component {
   componentDidMount() {
@@ -75,4 +77,7 @@ const actionCreators = {
   getUsers,
 };
 
-export default connect(mapStateToProps, actionCreators)(UsersContainer);
+export default compose(
+  connect(mapStateToProps, actionCreators),
+  withAuthRedirect
+)(UsersContainer);
