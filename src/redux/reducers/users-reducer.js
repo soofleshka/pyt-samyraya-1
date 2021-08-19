@@ -1,8 +1,4 @@
-import {
-  followUserAPI,
-  getUsersAPI,
-  unfollowUserAPI,
-} from "../../DAL/samuraiAPI/samuraiAPI";
+import { UsersAPI } from "../../DAL/samuraiAPI/samuraiAPI";
 
 const FOLLOW = "FOLLOW";
 const UNFOLLOW = "UNFOLLOW";
@@ -100,7 +96,7 @@ export const toggleDisabledFollowButtons = (isFetching, userId) => {
 
 export const getUsers = (usersCount, currentPage) => (dispatch) => {
   dispatch(setIsFetching(true));
-  getUsersAPI(usersCount, currentPage)
+  UsersAPI.getUsers(usersCount, currentPage)
     .then((data) => {
       if (data.error) {
         console.log(data.error);
@@ -117,7 +113,7 @@ export const getUsers = (usersCount, currentPage) => (dispatch) => {
 };
 export const addUsers = (usersCount, currentPage) => (dispatch) => {
   dispatch(setIsFetching(true));
-  getUsersAPI(usersCount, currentPage + 1)
+  UsersAPI.getUsers(usersCount, currentPage + 1)
     .then((data) => {
       if (data.error) {
         console.log(data.error);
@@ -134,7 +130,7 @@ export const addUsers = (usersCount, currentPage) => (dispatch) => {
 
 export const follow = (userId) => (dispatch) => {
   dispatch(toggleDisabledFollowButtons(true, userId));
-  followUserAPI(userId)
+  UsersAPI.followUser(userId)
     .then((data) => {
       if (data.resultCode === 0) {
         dispatch(followSuccess(userId));
@@ -148,7 +144,7 @@ export const follow = (userId) => (dispatch) => {
 
 export const unfollow = (userId) => (dispatch) => {
   dispatch(toggleDisabledFollowButtons(true, userId));
-  unfollowUserAPI(userId)
+  UsersAPI.unfollowUser(userId)
     .then((data) => {
       if (data.resultCode === 0) {
         dispatch(unfollowSuccess(userId));

@@ -1,4 +1,4 @@
-import { authMeAPI } from "../../DAL/samuraiAPI/samuraiAPI";
+import { AuthAPI } from "../../DAL/samuraiAPI/samuraiAPI";
 
 const SET_AUTH_DATA = "SET_AUTH_DATA";
 const SET_IS_FETCHING = "SET_IS_FETCHING";
@@ -40,7 +40,7 @@ export const setIsFetching = (isFetching) => ({
 
 export const authMe = () => (dispatch) => {
   dispatch(setIsFetching(true));
-  authMeAPI()
+  AuthAPI.authMe()
     .then((data) => {
       if (data.resultCode === 0) {
         const { id, login, email } = data.data;
