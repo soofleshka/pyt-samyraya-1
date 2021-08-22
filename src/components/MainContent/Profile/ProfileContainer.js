@@ -11,6 +11,7 @@ import { compose } from "redux";
 
 class ProfileContainer extends React.Component {
   componentDidMount() {
+    console.log("mount", window.store.getState().profilePage.isFetching);
     this.props.getProfileWithStatus(
       this.props.match.params.userId,
       this.props.myUserId

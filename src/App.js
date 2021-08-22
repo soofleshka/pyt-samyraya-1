@@ -1,19 +1,30 @@
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
+import { connect } from "react-redux";
 import { Header } from "./components/Header/Header";
 import { Navbar } from "./components/Navbar/Navbar";
 import { MainContent } from "./components/MainContent/MainContent";
+import { initializeApp } from "./redux/reducers/app-reducer";
+import Preloader from "./components/Preloader/Preloader";
 
-function App() {
-  return (
-    <BrowserRouter>
+class App extends React.Component {
+  componentDidMount() {
+    this.props.initializeApp();
+  }
+
+  render() {
+    if (!this.props.isInitialized) return <Preloader />;
+    return (
       <div className="container">
         <Header />
         <Navbar />
         <MainContent />
       </div>
-    </BrowserRouter>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => ({
+  isInitialized: state.app.isInitialized,
+});
+
+export default connect(mapStateToProps, { initializeApp })(App);

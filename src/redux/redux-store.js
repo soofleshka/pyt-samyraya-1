@@ -6,6 +6,7 @@ import newsReducer from "./reducers/news-reducer";
 import navbarFriendsReducer from "./reducers/navbar-friends-reducer";
 import usersReducer from "./reducers/users-reducer";
 import authReducer from "./reducers/auth-reducer";
+import appReducer from "./reducers/app-reducer";
 
 let reducers = combineReducers({
   profilePage: profileReducer,
@@ -14,6 +15,7 @@ let reducers = combineReducers({
   navbarPage: navbarFriendsReducer,
   usersPage: usersReducer,
   auth: authReducer,
+  app: appReducer,
 });
 
 let store = createStore(reducers, applyMiddleware(thunkMiddleware));

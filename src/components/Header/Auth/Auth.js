@@ -1,4 +1,5 @@
 import React from "react";
+import { NavLink } from "react-router-dom";
 import styles from "./Auth.module.css";
 
 const Auth = (props) => {
@@ -6,9 +7,19 @@ const Auth = (props) => {
     <div className={styles.authInfo}>
       {!props.isFetching ? (
         props.isAuth ? (
-          <span>Welcome {props.login}</span>
+          <>
+            <span className={styles.greetings}>Welcome {props.login}</span>
+            <NavLink to="/logout">
+              <button>Logout</button>
+            </NavLink>
+          </>
         ) : (
-          <span>Please login!</span>
+          <>
+            <span className={styles.greetings}>Please login!</span>
+            <NavLink to="/login">
+              <button>Login</button>
+            </NavLink>
+          </>
         )
       ) : undefined}
     </div>

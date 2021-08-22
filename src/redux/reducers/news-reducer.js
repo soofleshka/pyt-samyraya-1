@@ -25,8 +25,8 @@ const newsReducer = (state = initialState, action) => {
     case ADD_NEWS: {
       let newNews = {
         id: state.news.length + 1,
-        title: state.newNews.title,
-        body: state.newNews.body,
+        title: action.newNewsTitle,
+        body: action.newNewsBody,
       };
       return {
         ...state,
@@ -51,8 +51,12 @@ const newsReducer = (state = initialState, action) => {
   }
 };
 
-export const addNewsActionCreator = () => {
-  return { type: ADD_NEWS };
+export const addNewsActionCreator = (payload) => {
+  return {
+    type: ADD_NEWS,
+    newNewsTitle: payload.newNewsTitle,
+    newNewsBody: payload.newNewsBody,
+  };
 };
 export const changeNewNewsTitleActionCreator = (newNewsTitleText) => {
   return { type: CHANGE_NEW_NEWS_TITLE, newNewsTitleText };

@@ -1,40 +1,49 @@
 import React from "react";
+import { Field, Form } from "react-final-form";
+import { defaultRequired } from "../../../../utils/validators";
+import { CustomFormElement } from "../../../../common/CustomFormsElements/CustomFormElement";
 import styles from "./AddNews.module.css";
 
-export const AddNews = ({
-  newNews,
-  newsTitleChange,
-  newsBodyChange,
-  addNewsClick,
-}) => {
-  let newsTitleChangeHandler = (e) => {
-    newsTitleChange(e.target.value);
-  };
-  let newsBodyChangeHandler = (e) => {
-    newsBodyChange(e.target.value);
-  };
-  let addNewsClickHandler = () => {
-    addNewsClick();
-  };
+const AddNewsForm = ({ addNewsClick }) => {
+  return (
+    <Form onSubmit={addNewsClick}>
+      {({ handleSubmit, form }) => (
+        <form
+          onSubmit={(event) => {
+            handleSubmit(event);
+            form.restart();
+          }}
+        >
+          <div>
+            <label>Title</label>
+            <Field
+              name="newNewsTitle"
+              component={CustomFormElement}
+              Element="textarea"
+              validate={defaultRequired}
+            />
+          </div>
+          <div>
+            <label>Body</label>
+            <Field
+              name="newNewsBody"
+              component={CustomFormElement}
+              Element="textarea"
+              validate={defaultRequired}
+            />
+          </div>
+          <button>Add news</button>
+        </form>
+      )}
+    </Form>
+  );
+};
+
+export const AddNews = (props) => {
   return (
     <div className={styles.addNews}>
       <h3>Add new news</h3>
-      <div>
-        <label htmlFor="">Title</label>
-        <input
-          type="text"
-          onChange={newsTitleChangeHandler}
-          value={newNews.title}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Body</label>
-        <textarea
-          onChange={newsBodyChangeHandler}
-          value={newNews.body}
-        ></textarea>
-      </div>
-      <button onClick={addNewsClickHandler}>Add news</button>
+      <AddNewsForm {...props} />
     </div>
   );
 };

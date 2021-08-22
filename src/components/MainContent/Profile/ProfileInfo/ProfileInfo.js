@@ -1,5 +1,5 @@
 import React from "react";
-import { ProfileStatus } from "./ProfileStatus";
+import ProfileStatus from "./ProfileStatus";
 import styles from "./ProfileInfo.module.css";
 import profile_img from "../../../../assets/images/profile_img_gag.jpeg";
 import profile_default_avatar from "../../../../assets/images/default_profile_img.jpg";

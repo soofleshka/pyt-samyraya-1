@@ -7,7 +7,7 @@ const ADD_USERS_TO_STATE = "ADD_USERS_TO_STATE";
 const SET_TOTAL_USERS = "SET_TOTAL_USERS";
 const SET_CURRENT_PAGE = "SET_CURRENT_PAGE";
 const DOUBLE_USERS_COUNT = "DOUBLE_USERS_COUNT";
-const SET_IS_FETCHING = "SET_IS_FETCHING";
+const SET_IS_FETCHING_USERS = "SET_IS_FETCHING_USERS";
 const TOGGLE_DISABLED_FOLLOW_BUTTON = "TOGGLE_DISABLED_FOLLOW_BUTTON";
 
 const initialState = {
@@ -48,7 +48,7 @@ let usersReducer = (state = initialState, action) => {
       return { ...state, totalUsers: action.totalUsers };
     case SET_CURRENT_PAGE:
       return { ...state, currentPage: action.currentPage };
-    case SET_IS_FETCHING:
+    case SET_IS_FETCHING_USERS:
       return { ...state, isFetching: action.isFetching };
     case TOGGLE_DISABLED_FOLLOW_BUTTON:
       return {
@@ -88,7 +88,7 @@ export const doubleUsersCount = () => {
   return { type: DOUBLE_USERS_COUNT };
 };
 export const setIsFetching = (isFetching) => {
-  return { type: SET_IS_FETCHING, isFetching };
+  return { type: SET_IS_FETCHING_USERS, isFetching };
 };
 export const toggleDisabledFollowButtons = (isFetching, userId) => {
   return { type: TOGGLE_DISABLED_FOLLOW_BUTTON, isFetching, userId };
