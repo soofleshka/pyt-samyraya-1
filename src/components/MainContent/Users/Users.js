@@ -11,14 +11,14 @@ const Users = ({
   followButtonClickHandler,
   unfollowButtonClickHandler,
   disabledFollowButtons,
-  loading,
+  isFetching,
   pageLinks,
   showMoreUsersButtonHandler,
   pageLinkClickHandler,
 }) => {
   return (
     <div className={styles.users}>
-      {loading && <Preloader />}
+      {isFetching && <Preloader />}
       <h4>TotalUsers: {totalUsers}</h4>
       <p>links:</p>
       {pageLinks.map((p, index) => {
@@ -45,7 +45,7 @@ const Users = ({
         <button
           onClick={showMoreUsersButtonHandler}
           className={styles.showMore_Button}
-          disabled={loading}
+          disabled={isFetching}
         >
           Show more
         </button>

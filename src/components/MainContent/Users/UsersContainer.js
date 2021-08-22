@@ -1,57 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { connect } from "react-redux";
 import {
-  addUsers,
-  doubleUsersCount,
-  followUser,
-  setCurrentPage,
-  setTotalUsers,
-  setUsers,
-  toggleFollowButton,
-  unfollowUser,
-} from "../../../redux/reducers/users-reducer";
-import {
-  followUserAPI,
-  getUsersAPI,
-  unfollowUserAPI,
-} from "../../../DAL/samuraiAPI/samuraiAPI";
-import Users from "./Users";
-
-const UsersContainer = ({
-  users,
-  currentPage,
-  totalUsers,
-  usersCount,
   follow,
-  unfollow,
-  disabledFollowButtons,
-  setUsers,
-  addUsers,
-  setTotalUsers,
+  getUsers,
   setCurrentPage,
-  doubleUsersCount,
-  toggleFollowButton,
-}) => {
-  const [loading, setLoading] = useState(false);
+  showMoreUsers,
+  unfollow,
+} from "../../../redux/reducers/users-reducer";
+import Users from "./Users";
+import { withAuthRedirect } from "../../../HOC/withAuthRedirect";
+import { compose } from "redux";
+
+const UsersContainer = (props) => {
   const [pageLinks, setPageLinks] = useState([]);
+  const { users, totalUsers, currentPage, usersCount } = props;
 
   useEffect(() => {
-    setLoading(true);
-
-    getUsersAPI(usersCount <= 100 ? usersCount : usersCount / 2, currentPage)
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          setUsers(data.items);
-          setTotalUsers(data.totalCount);
-        }
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e);
-        setLoading(false);
-      });
+    props.getUsers(
+      usersCount <= 100 ? usersCount : usersCount / 2,
+      currentPage
+    );
   }, [currentPage]);
 
   useEffect(() => {
@@ -76,62 +44,25 @@ const UsersContainer = ({
   }, [totalUsers, usersCount, currentPage]);
 
   const showMoreUsersButtonHandler = () => {
-    setLoading(true);
-    getUsersAPI(usersCount, currentPage + 1)
-      .then((data) => {
-        if (data.error) {
-          console.log(data.error);
-        } else {
-          addUsers(data.items);
-          doubleUsersCount();
-        }
-        setLoading(false);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        setLoading(false);
-      });
+    props.showMoreUsers(usersCount, currentPage);
   };
   const pageLinkClickHandler = (p) => {
-    setCurrentPage(p);
+    props.setCurrentPage(p);
   };
 
   const followButtonClickHandler = (userId) => {
-    toggleFollowButton(true, userId);
-    followUserAPI(userId)
-      .then((data) => {
-        if (data.resultCode === 0) follow(userId);
-        toggleFollowButton(false, userId);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        toggleFollowButton(false, userId);
-      });
+    props.follow(userId);
   };
   const unfollowButtonClickHandler = (userId) => {
-    toggleFollowButton(true, userId);
-    unfollowUserAPI(userId)
-      .then((data) => {
-        if (data.resultCode === 0) unfollow(userId);
-        toggleFollowButton(false, userId);
-      })
-      .catch((e) => {
-        console.log(e.message);
-        toggleFollowButton(false, userId);
-      });
+    props.unfollow(userId);
   };
 
   return (
     <Users
-      users={users}
-      currentPage={currentPage}
-      totalUsers={totalUsers}
-      usersCount={usersCount}
+      {...props}
+      pageLinks={pageLinks}
       followButtonClickHandler={followButtonClickHandler}
       unfollowButtonClickHandler={unfollowButtonClickHandler}
-      disabledFollowButtons={disabledFollowButtons}
-      loading={loading}
-      pageLinks={pageLinks}
       showMoreUsersButtonHandler={showMoreUsersButtonHandler}
       pageLinkClickHandler={pageLinkClickHandler}
     />
@@ -145,18 +76,19 @@ const mapStateToProps = (state) => {
     totalUsers: state.usersPage.totalUsers,
     usersCount: state.usersPage.usersCount,
     disabledFollowButtons: state.usersPage.disabledFollowButtons,
+    isFetching: state.usersPage.isFetching,
   };
 };
 
 const actionCreators = {
-  follow: followUser,
-  unfollow: unfollowUser,
-  setUsers,
-  addUsers,
-  setTotalUsers,
+  getUsers,
+  follow,
+  unfollow,
   setCurrentPage,
-  doubleUsersCount,
-  toggleFollowButton,
+  showMoreUsers,
 };
 
-export default connect(mapStateToProps, actionCreators)(UsersContainer);
+export default compose(
+  withAuthRedirect,
+  connect(mapStateToProps, actionCreators)
+)(UsersContainer);
