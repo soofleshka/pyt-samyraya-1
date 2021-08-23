@@ -2,15 +2,9 @@ import React from "react";
 import styles from "./Dialogs.module.css";
 import { DialogItem } from "./DialogItem/DialogItem";
 import { DialogMessage } from "./DialogMessage/DialogMessage";
-import { SendMessage } from "./SendMessage/SendMessage";
+import SendMessage from "./SendMessage/SendMessage";
 
-export const Dialogs = ({
-  dialogs,
-  messages,
-  newMessageText,
-  sendMessage,
-  changeNewMessage,
-}) => {
+export const Dialogs = ({ dialogs, messages, ...props }) => {
   return (
     <div>
       <div className={styles.dialogs}>
@@ -26,11 +20,7 @@ export const Dialogs = ({
         </div>
       </div>
 
-      <SendMessage
-        newMessageText={newMessageText}
-        sendMessage={sendMessage}
-        changeNewMessage={changeNewMessage}
-      />
+      <SendMessage {...props} />
     </div>
   );
 };

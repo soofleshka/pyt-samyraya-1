@@ -1,21 +1,33 @@
 import React from "react";
+import { Field, Form, Formik } from "formik";
+import { MAX_INPUT_LENGTH } from "../../../../../../common/constants";
 import styles from "./AddPost.module.css";
+import { required } from "../../../../../../common/formsValidations/formsValidations";
 
-export const AddPost = ({ newPostText, addPost, changeNewPostText }) => {
-  let addPostHandler = () => {
-    addPost();
+const AddPostForm = (props) => {
+  const handleSubmit = ({ newPostText }, { resetForm }) => {
+    props.addPost(newPostText);
+    resetForm();
   };
-
-  let changeNewPostTextHandler = (e) => {
-    changeNewPostText(e.target.value);
-  };
-
   return (
-    <div className={styles.addPost}>
-      <textarea onChange={changeNewPostTextHandler} value={newPostText} />
-      <button onClick={addPostHandler} className={styles.addPost__button}>
-        Add post
-      </button>
-    </div>
+    <Formik
+      initialValues={{
+        newPostText: "",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <Form className={styles.addPost}>
+        <Field
+          component="textarea"
+          name="newPostText"
+          maxLength={MAX_INPUT_LENGTH}
+          placeholder="Введите пост"
+          validate={required}
+        />
+        <button className={styles.addPost__button}>AddPost</button>
+      </Form>
+    </Formik>
   );
 };
+
+export default AddPostForm;

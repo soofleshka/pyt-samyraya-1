@@ -1,6 +1,4 @@
 const ADD_NEWS = "ADD_NEWS";
-const CHANGE_NEW_NEWS_TITLE = "CHANGE_NEW_NEWS_TITLE";
-const CHANGE_NEW_NEWS_BODY = "CHANGE_NEW_NEWS_BODY";
 
 let initialState = {
   news: [
@@ -17,7 +15,6 @@ let initialState = {
       body: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi non quis exercitationem culpa nesciunt nihil aut nostrum explicabo reprehenderit optio amet ab temporibus asperiores quasi cupiditate. Voluptatum ducimus voluptates voluptas?",
     },
   ],
-  newNews: { title: "", body: "" },
 };
 
 const newsReducer = (state = initialState, action) => {
@@ -25,8 +22,8 @@ const newsReducer = (state = initialState, action) => {
     case ADD_NEWS: {
       let newNews = {
         id: state.news.length + 1,
-        title: state.newNews.title,
-        body: state.newNews.body,
+        title: action.newNewsTitle,
+        body: action.newNewsBody,
       };
       return {
         ...state,
@@ -34,31 +31,17 @@ const newsReducer = (state = initialState, action) => {
         newNews: { ...state.newNews, title: "", body: "" },
       };
     }
-    case CHANGE_NEW_NEWS_TITLE: {
-      return {
-        ...state,
-        newNews: { ...state.newNews, title: action.newNewsTitleText },
-      };
-    }
-    case CHANGE_NEW_NEWS_BODY: {
-      return {
-        ...state,
-        newNews: { ...state.newNews, body: action.newNewsBodyText },
-      };
-    }
     default:
       return state;
   }
 };
 
-export const addNewsActionCreator = () => {
-  return { type: ADD_NEWS };
-};
-export const changeNewNewsTitleActionCreator = (newNewsTitleText) => {
-  return { type: CHANGE_NEW_NEWS_TITLE, newNewsTitleText };
-};
-export const changeNewNewsBodyActionCreator = (newNewsBodyText) => {
-  return { type: CHANGE_NEW_NEWS_BODY, newNewsBodyText };
+export const addNewsActionCreator = (payload) => {
+  return {
+    type: ADD_NEWS,
+    newNewsTitle: payload.newNewsTitle,
+    newNewsBody: payload.newNewsBody,
+  };
 };
 
 export default newsReducer;

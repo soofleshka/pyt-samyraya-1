@@ -12,7 +12,6 @@ import Preloader from "../../common/Preloader/Preloader";
 const ProfileContainer = (props) => {
   const { profile, profileStatus, isFetching, myUserId, isAuth } = props;
   useEffect(() => {
-    console.log("aaa");
     props.getProfileWithStatus(props.match.params.userId, myUserId);
   }, [props.match.params.userId]);
 

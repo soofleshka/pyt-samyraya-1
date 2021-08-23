@@ -1,7 +1,6 @@
 import { profileAPI } from "../../DAL/samuraiAPI/samuraiAPI";
 
 const ADD_POST = "ADD_POST";
-const CHANGE_NEW_POST = "CHANGE_NEW_POST";
 const SET_PROFILE = "SET_PROFILE";
 const SET_PROFILE_STATUS = "SET_PROFILE_STATUS";
 const SET_IS_FETCHING_PROFILE = "SET_IS_FETCHING_PROFILE";
@@ -20,7 +19,6 @@ let initialState = {
     { id: 5, post: "Lorem ipsum dolor sit amet." },
   ],
   isFetching: false,
-  newPostText: "",
 };
 
 const profileReducer = (state = initialState, action) => {
@@ -28,11 +26,9 @@ const profileReducer = (state = initialState, action) => {
     case ADD_POST:
       let newPost = {
         id: state.posts.length + 1,
-        post: state.newPostText,
+        post: action.newPostText,
       };
-      return { ...state, posts: [...state.posts, newPost], newPostText: "" };
-    case CHANGE_NEW_POST:
-      return { ...state, newPostText: action.newPostTextValue };
+      return { ...state, posts: [...state.posts, newPost] };
     case SET_PROFILE:
       return { ...state, profile: action.profile };
     case SET_PROFILE_STATUS:
@@ -44,11 +40,8 @@ const profileReducer = (state = initialState, action) => {
   }
 };
 
-export const addPostActionCreator = () => ({ type: "ADD_POST" });
-export const changeNewPostActionCreator = (newPostTextValue) => ({
-  type: CHANGE_NEW_POST,
-  newPostTextValue,
-});
+export const addPost = (newPostText) => ({ type: ADD_POST, newPostText });
+
 export const setProfile = (profile) => ({
   type: SET_PROFILE,
   profile,

@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./Header.module.css";
-import AuthContainer from "./Auth/AuthContainer";
+import { Auth } from "./Auth/Auth";
 
 export const Header = () => {
   return (
@@ -8,7 +8,7 @@ export const Header = () => {
       <a href="/" className={styles.logo}>
         <span>RSN</span>
       </a>
-      <AuthContainer />
+      <Auth />
     </header>
   );
 };

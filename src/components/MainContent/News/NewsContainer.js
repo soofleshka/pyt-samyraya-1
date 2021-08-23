@@ -1,10 +1,6 @@
 import { connect } from "react-redux";
 import { News } from "./News";
-import {
-  addNewsActionCreator,
-  changeNewNewsBodyActionCreator,
-  changeNewNewsTitleActionCreator,
-} from "../../../redux/reducers/news-reducer";
+import { addNewsActionCreator } from "../../../redux/reducers/news-reducer";
 
 const mapStateToProps = (state) => {
   return {
@@ -15,9 +11,7 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    newsTitleChange: (text) => dispatch(changeNewNewsTitleActionCreator(text)),
-    newsBodyChange: (body) => dispatch(changeNewNewsBodyActionCreator(body)),
-    addNewsClick: () => dispatch(addNewsActionCreator()),
+    addNews: (payload) => dispatch(addNewsActionCreator(payload)),
   };
 };
 

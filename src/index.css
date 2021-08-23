@@ -26,3 +26,13 @@ main{
     grid-area: main;
     background-color: #f2351d;
 }
+
+#root > .preloader{
+    text-align: center;
+}
+
+.error{
+    color: white;
+    font-weight: bold;
+    margin-left: 5px;
+}

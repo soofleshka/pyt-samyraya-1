@@ -1,40 +1,45 @@
 import React from "react";
 import styles from "./AddNews.module.css";
+import { Form, Formik } from "formik";
+import { required } from "../../../../common/formsValidations/formsValidations";
+import CommonFormElement from "../../../../common/CommonFormElement/CommonFormElement";
 
-export const AddNews = ({
-  newNews,
-  newsTitleChange,
-  newsBodyChange,
-  addNewsClick,
-}) => {
-  let newsTitleChangeHandler = (e) => {
-    newsTitleChange(e.target.value);
-  };
-  let newsBodyChangeHandler = (e) => {
-    newsBodyChange(e.target.value);
-  };
-  let addNewsClickHandler = () => {
-    addNewsClick();
+const AddNewsForm = (props) => {
+  const handleSubmit = (values, { resetForm }) => {
+    props.addNews(values);
+    resetForm();
   };
   return (
-    <div className={styles.addNews}>
-      <h3>Add new news</h3>
-      <div>
-        <label htmlFor="">Title</label>
-        <input
-          type="text"
-          onChange={newsTitleChangeHandler}
-          value={newNews.title}
-        />
-      </div>
-      <div>
-        <label htmlFor="">Body</label>
-        <textarea
-          onChange={newsBodyChangeHandler}
-          value={newNews.body}
-        ></textarea>
-      </div>
-      <button onClick={addNewsClickHandler}>Add news</button>
-    </div>
+    <Formik
+      initialValues={{
+        newNewsTitle: "",
+        newNewsBody: "",
+      }}
+      onSubmit={handleSubmit}
+    >
+      <Form className={styles.addNews}>
+        <h3>Add new news</h3>
+        <div>
+          <label>Title</label>
+          <CommonFormElement
+            Element="input"
+            name="newNewsTitle"
+            type="text"
+            validate={required}
+          />
+        </div>
+        <div>
+          <label>Body</label>
+          <CommonFormElement
+            Element="textarea"
+            name="newNewsBody"
+            component="textarea"
+            validate={required}
+          />
+        </div>
+        <button>Add news</button>
+      </Form>
+    </Formik>
   );
 };
+export default AddNewsForm;

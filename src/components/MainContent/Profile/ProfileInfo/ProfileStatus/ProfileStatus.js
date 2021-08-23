@@ -1,23 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import styles from "../ProfileInfo.module.css";
+import { Field, Form, Formik } from "formik";
+import { MAX_INPUT_LENGTH } from "../../../../../common/constants";
 
 export const ProfileStatus = (props) => {
-  const [profileStatus, setProfileStatus] = useState("");
-  const [statusEditMode, setstatusEditMode] = useState(false);
-  useEffect(() => {
-    setProfileStatus(props.profileStatus);
-  }, [props.profileStatus]);
+  const [statusEditMode, setStatusEditMode] = useState(false);
 
   const toggleEditStatus = () => {
-    setstatusEditMode(!statusEditMode);
+    setStatusEditMode(!statusEditMode);
   };
 
-  const profileStatusBlurHandler = () => {
+  const profileStatusChangeHandler = ({ profileStatus }) => {
     props.changeProfileStatus(profileStatus);
     toggleEditStatus();
-  };
-  const profileStatusChangeHandler = (e) => {
-    setProfileStatus(e.target.value);
   };
   const editStatusToggleHandler = () => {
     toggleEditStatus();
@@ -29,23 +24,30 @@ export const ProfileStatus = (props) => {
         <div className={styles.status}>
           {!statusEditMode ? (
             <div onDoubleClick={editStatusToggleHandler}>
-              {<p>{profileStatus || "Введите статус"}</p>}
+              {<p>{props.profileStatus || "Введите статус"}</p>}
             </div>
           ) : (
-            <div>
-              <p>
-                <input
-                  autoFocus={true}
-                  onBlur={profileStatusBlurHandler}
-                  onChange={profileStatusChangeHandler}
-                  value={profileStatus}
-                />
-              </p>
-            </div>
+            <p>
+              <Formik
+                initialValues={{ profileStatus: props.profileStatus }}
+                onSubmit={profileStatusChangeHandler}
+              >
+                {({ handleSubmit }) => (
+                  <Form>
+                    <Field
+                      name="profileStatus"
+                      autoFocus={true}
+                      onBlur={handleSubmit}
+                      maxLength={MAX_INPUT_LENGTH}
+                    />
+                  </Form>
+                )}
+              </Formik>
+            </p>
           )}
         </div>
       ) : (
-        <div>{profileStatus && <p>{profileStatus}</p>}</div>
+        <p>{props.profileStatus}</p>
       )}
     </div>
   );
