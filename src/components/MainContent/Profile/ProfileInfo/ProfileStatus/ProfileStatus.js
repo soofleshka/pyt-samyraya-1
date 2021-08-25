@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import styles from "../ProfileInfo.module.css";
 import { Field, Form, Formik } from "formik";
 import { MAX_INPUT_LENGTH } from "../../../../../common/constants";
+import styles from "../ProfileInfo.module.css";
 
 export const ProfileStatus = (props) => {
   const [statusEditMode, setStatusEditMode] = useState(false);
@@ -20,11 +20,16 @@ export const ProfileStatus = (props) => {
 
   return (
     <div>
+      <h3>Status</h3>
       {props.isMyProfile ? (
         <div className={styles.status}>
           {!statusEditMode ? (
             <div onDoubleClick={editStatusToggleHandler}>
-              {<p>{props.profileStatus || "Введите статус"}</p>}
+              {
+                <p className={styles.status}>
+                  {props.profileStatus || "Введите статус"}
+                </p>
+              }
             </div>
           ) : (
             <p>
@@ -47,7 +52,7 @@ export const ProfileStatus = (props) => {
           )}
         </div>
       ) : (
-        <p>{props.profileStatus}</p>
+        <p className={styles.status}>{props.profileStatus}</p>
       )}
     </div>
   );

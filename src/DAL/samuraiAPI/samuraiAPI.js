@@ -25,6 +25,11 @@ export const authAPI = {
   logout: () => {
     return instance.post("/auth/logout").then((response) => response.data);
   },
+  getCaptcha: () => {
+    return instance
+      .get("security/get-captcha-url")
+      .then((response) => response.data);
+  },
 };
 
 export const profileAPI = {
@@ -40,6 +45,14 @@ export const profileAPI = {
     return instance
       .put(`/profile/status`, { status })
       .then((response) => response.data);
+  },
+  sendProfilePhoto: (formData) => {
+    return instance
+      .put("/profile/photo", formData)
+      .then((response) => response.data);
+  },
+  updateProfileInfo: (profile) => {
+    return instance.put("/profile", profile).then((response) => response.data);
   },
 };
 

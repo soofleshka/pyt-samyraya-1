@@ -1,9 +1,9 @@
 import React from "react";
-import styles from "./Auth.module.css";
 import { NavLink } from "react-router-dom";
 import { useSelector } from "react-redux";
+import styles from "./AuthPanel.module.css";
 
-export const Auth = () => {
+export const AuthPanel = () => {
   const isAuth = useSelector((state) => state.auth.isAuth);
   const login = useSelector((state) => state.auth.login);
   return (

@@ -27,6 +27,7 @@ export const authMe = () => (dispatch) => {
   return authAPI
     .authMe()
     .then((data) => {
+      if (!data) return;
       if (data.resultCode === 0) {
         const { id, login, email } = data.data;
         dispatch(setAuthData(id, login, email, true));
@@ -35,19 +36,35 @@ export const authMe = () => (dispatch) => {
     .catch((e) => console.log(e.message));
 };
 
+const getCaptcha = () => {
+  return authAPI.getCaptcha();
+};
+
+export const reloadCaptcha = () => (dispatch) => {
+  return dispatch(getCaptcha).then((data) => data.url);
+};
+
 export const login = (payload) => (dispatch) => {
   const { email, password, rememberMe, captcha } = payload;
-  return authAPI.login(email, password, rememberMe, captcha).then((data) => {
-    if (data.resultCode === 0) {
-      dispatch(authMe());
-      return;
-    }
-    if (data.resultCode === 10) {
-      //CAPTCHA
-      return;
-    }
-    return data.messages;
-  });
+  return authAPI
+    .login(email, password, rememberMe, captcha)
+    .then((data) => {
+      if (data.resultCode === 0) {
+        dispatch(authMe());
+        return;
+      }
+      if (data.resultCode === 10) {
+        const resultCode = data.resultCode;
+        const errors = data.messages;
+        return dispatch(getCaptcha).then((data) => ({
+          resultCode,
+          captchaUrl: data.url,
+          errors,
+        }));
+      }
+      return { resultCode: data.resultCode, errors: data.messages };
+    })
+    .catch((e) => console.log(e.message));
 };
 
 export const logout = () => (dispatch) => {

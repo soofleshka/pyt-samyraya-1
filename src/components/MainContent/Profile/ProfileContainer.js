@@ -3,6 +3,8 @@ import { connect } from "react-redux";
 import { compose } from "redux";
 import { withAuthRedirect } from "../../../HOC/withAuthRedirect";
 import {
+  changeProfileAdditionInfo,
+  changeProfilePhoto,
   changeProfileStatus,
   getProfileWithStatus,
 } from "../../../redux/reducers/profile-reducer";
@@ -12,8 +14,9 @@ import Preloader from "../../common/Preloader/Preloader";
 const ProfileContainer = (props) => {
   const { profile, profileStatus, isFetching, myUserId, isAuth } = props;
   useEffect(() => {
+    console.log("profile effect");
     props.getProfileWithStatus(props.match.params.userId, myUserId);
-  }, [props.match.params.userId]);
+  }, [props.match.params.userId, myUserId]);
 
   if (isFetching) return <Preloader />;
   if (!profile) return <h3>Профиль не найден</h3>;
@@ -27,6 +30,8 @@ const ProfileContainer = (props) => {
       profileStatus={profileStatus}
       isMyProfile={isMyProfile}
       changeProfileStatus={props.changeProfileStatus}
+      changeProfilePhoto={props.changeProfilePhoto}
+      changeProfileAdditionInfo={props.changeProfileAdditionInfo}
     />
   );
 };
@@ -43,5 +48,10 @@ const mapStateToProps = (state) => {
 
 export default compose(
   withAuthRedirect,
-  connect(mapStateToProps, { getProfileWithStatus, changeProfileStatus })
+  connect(mapStateToProps, {
+    getProfileWithStatus,
+    changeProfileStatus,
+    changeProfilePhoto,
+    changeProfileAdditionInfo,
+  })
 )(ProfileContainer);

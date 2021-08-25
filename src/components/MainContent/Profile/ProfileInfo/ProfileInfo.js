@@ -1,36 +1,59 @@
 import React from "react";
 import { ProfileStatus } from "./ProfileStatus/ProfileStatus";
-import styles from "./ProfileInfo.module.css";
 import profile_gag from "../../../../assets/images/profile_img_gag.jpeg";
+import default_profile_avatar from "../../../../assets/images/default_profile_img.jpg";
+import styles from "./ProfileInfo.module.css";
+import { ProfileAdditionInfo } from "./ProfileAdditionInfo/ProfileAdditionInfo";
 
 export const ProfileInfo = ({
   profile,
   profileStatus,
   isMyProfile,
   changeProfileStatus,
+  changeProfilePhoto,
+  changeProfileAdditionInfo,
 }) => {
+  const chooseFileHandler = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      changeProfilePhoto(file);
+    }
+  };
   return (
-    <div className={styles.profileInfo}>
-      <img src={profile_gag} alt="profile gag" />
-      {isMyProfile && <h3>My profile</h3>}
-      <img
-        src={profile.photos.small}
-        alt="users avatar"
-        className={styles.profileAvatar}
-      />{" "}
-      {profile.fullName}
-      <ProfileStatus
-        profileStatus={profileStatus}
-        isMyProfile={isMyProfile}
-        changeProfileStatus={changeProfileStatus}
-      />
-      <p>{profile.aboutMe}</p>
-      {profile.lookingForAJob && (
-        <div>
-          <p>Looking for a Job</p>
-          <p>{profile.lookingForAJobDescription}</p>
+    <>
+      <img src={profile_gag} alt="profile gag" className={styles.profileGag} />
+      <div className={styles.profileInfo}>
+        <div className={styles.profileMainPart}>
+          <img
+            src={profile.photos.large || default_profile_avatar}
+            alt="users avatar"
+            className={styles.profileAvatar}
+          />{" "}
+          {isMyProfile && (
+            <label className={styles.customFileUpload}>
+              <input
+                type="file"
+                onChange={chooseFileHandler}
+                accept=".png, .jpg, .jpeg"
+              />
+              Изменить фото
+            </label>
+          )}
+          <span className={styles.profileFullname}>{profile.fullName}</span>
+          <ProfileStatus
+            profileStatus={profileStatus}
+            isMyProfile={isMyProfile}
+            changeProfileStatus={changeProfileStatus}
+          />
         </div>
-      )}
-    </div>
+        <div>
+          <ProfileAdditionInfo
+            isMyProfile={isMyProfile}
+            profile={profile}
+            changeProfileAdditionInfo={changeProfileAdditionInfo}
+          />
+        </div>
+      </div>
+    </>
   );
 };
